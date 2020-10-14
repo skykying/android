@@ -27,6 +27,7 @@ import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.coboltforge.dontmind.xbox.ui.MainActivity;
 
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 import me.jessyan.mvparms.demo.setting.SettingActivity;
 
@@ -273,7 +274,8 @@ public class HomeActivityJava extends AppCompatActivity implements View.OnClickL
 //                applyFragment(fragment4);
                 break;
             case 4:
-                applyFragment(fragment5);
+                startActivity(new Intent(this, MachineActivity.class));
+//                applyFragment(fragment5);
                 break;
             default:
                 applyFragment(fragment6);

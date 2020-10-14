@@ -98,6 +98,7 @@
         <activity android:name=".setting.SettingActivity" />
         <activity android:name=".setting.FillTheFormActivity" />
         <activity android:name=".setting.AppConfigsActivity" />
+        <activity android:name=".mvp.ui.activity.MachineActivity" />
 
         <service
             android:enabled="true"

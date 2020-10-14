@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.yarolegovich.lovelyuserinput.LovelyInput;
@@ -25,6 +26,13 @@ SharedPreferences.OnSharedPreferenceChangeListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pref);
+
+        //获取toolbar
+        Toolbar toolBar = findViewById(R.id.toolbar);
+        //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可
+        toolBar.setTitle("ToolBar Title");
+        //用toolbar替换actionbar
+        setSupportActionBar(toolBar);
 
         Prefs.init(this);
 
@@ -73,12 +81,12 @@ SharedPreferences.OnSharedPreferenceChangeListener{
     private LovelyInput createLovelyInputModule() {
         Map<String, Integer> iconMappings = new HashMap<>();
         Prefs keys = Prefs.keys();
-//        iconMappings.put(keys.KEY_UPDATE_INTERVAL, R.drawable.ic_access_time_white_36dp);
-//        iconMappings.put(keys.KEY_LOCATION, R.drawable.ic_location_on_white_36dp);
-//        iconMappings.put(keys.KEY_TEMPERATURE, R.drawable.ic_thermometer_lines_white_36dp);
-//        iconMappings.put(keys.KEY_DATE_FORMAT, R.drawable.ic_date_range_white_36dp);
-//        iconMappings.put(keys.KEY_TIME_FORMAT, R.drawable.ic_access_time_white_36dp);
-//        iconMappings.put(keys.KEY_TECHNOLOGIES, R.drawable.ic_computer_white_36dp);
+        iconMappings.put(keys.KEY_UPDATE_INTERVAL, R.drawable.ic_access_time_white_36dp);
+        iconMappings.put(keys.KEY_LOCATION, R.drawable.ic_location_on_white_36dp);
+        iconMappings.put(keys.KEY_TEMPERATURE, R.drawable.ic_thermometer_lines_white_36dp);
+        iconMappings.put(keys.KEY_DATE_FORMAT, R.drawable.ic_date_range_white_36dp);
+        iconMappings.put(keys.KEY_TIME_FORMAT, R.drawable.ic_access_time_white_36dp);
+        iconMappings.put(keys.KEY_TECHNOLOGIES, R.drawable.ic_computer_white_36dp);
         int topColor = ContextCompat.getColor(this, R.color.lovelyDialogTop);
         return new LovelyInput.Builder()
                 .setKeyIconMappings(iconMappings)

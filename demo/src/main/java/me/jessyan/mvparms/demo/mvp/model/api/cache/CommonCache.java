@@ -25,6 +25,7 @@ import io.rx_cache2.LifeCache;
 import io.rx_cache2.Reply;
 import io.rx_cache2.internal.RxCache;
 import me.jessyan.mvparms.demo.mvp.model.entity.Device;
+import me.jessyan.mvparms.demo.mvp.model.entity.Machine;
 import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
 /**
@@ -43,4 +44,7 @@ public interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<Device>>> getDevices(Observable<List<Device>> devices);
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<List<Machine>>> getMachines(Observable<List<Machine>> machines, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 }
