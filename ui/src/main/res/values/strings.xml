@@ -14,4 +14,8 @@
     <string name="exc_not_frag_activity_subclass">Context should be subclass of FragmentActivity, for example - AppCompatActivity</string>
     <string name="exc_no_entries_to_list_provided">You must provide mp_entry_values or mp_entry_descriptions attribute or both in your XML layout!</string>
     <string name="exc_not_int_default">Please provide integer mp_default_value</string>
+    <string name="dont_show_again">Don\'t show again</string>
+
+    <string name="ex_msg_dialog_choice_confirm">Confirm button is only for multi choice lists. You must call setMultiChoiceItems first</string>
+    <string name="ex_msg_dialog_view_not_set">You must call method setView before calling configureView.</string>
 </resources>

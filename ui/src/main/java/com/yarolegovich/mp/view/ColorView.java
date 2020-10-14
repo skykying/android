@@ -11,7 +11,7 @@ import androidx.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.yarolegovich.mp.R;
+import com.shashank.platform.loginui.R;
 import com.yarolegovich.mp.util.Utils;
 
 /**

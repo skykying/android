@@ -5,4 +5,8 @@
     <item name="mp_summary" type="id"/>
     <item name="mp_icon" type="id"/>
     <item name="mp_checkable" type="id"/>
+    <item name="ld_icon" type="id"/>
+    <item name="ld_title" type="id"/>
+    <item name="ld_message" type="id"/>
+    <item name="ld_color_area" type="id"/>
 </resources>
