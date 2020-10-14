@@ -1,4 +1,4 @@
-package com.yarolegovich.materialprefsample;
+package me.jessyan.mvparms.demo.setting;
 
 import android.graphics.Color;
 

@@ -1,4 +1,4 @@
-package com.yarolegovich.materialprefsample;
+package me.jessyan.mvparms.demo.setting;
 
 import android.os.Bundle;
 
@@ -8,9 +8,7 @@ import java.util.Collections;
 
 import me.jessyan.mvparms.demo.R;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public class AppConfigsActivity extends ToolbarActivity {
 
     @Override

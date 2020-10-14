@@ -1,4 +1,4 @@
-package com.yarolegovich.materialprefsample;
+package me.jessyan.mvparms.demo.setting;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +10,7 @@ import com.yarolegovich.mp.MaterialPreferenceScreen;
 
 import me.jessyan.mvparms.demo.R;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public class FillTheFormActivity extends ToolbarActivity {
 
     private Form form = new Form();

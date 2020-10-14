@@ -1,13 +1,11 @@
-package com.yarolegovich.materialprefsample;
+package me.jessyan.mvparms.demo.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import me.jessyan.mvparms.demo.R;
 
-/**
- * Created by yarolegovich on 16.05.2016.
- */
+
 public class ToolbarActivity extends AppCompatActivity {
 
     @SuppressWarnings("ConstantConditions")

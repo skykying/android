@@ -1,4 +1,4 @@
-package com.yarolegovich.materialprefsample;
+package me.jessyan.mvparms.demo.setting;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,13 +18,13 @@ import java.util.Map;
 import me.jessyan.mvparms.demo.R;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+public class SettingActivity extends AppCompatActivity implements View.OnClickListener,
 SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pref);
 
         Prefs.init(this);
 

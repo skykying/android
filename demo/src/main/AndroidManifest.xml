@@ -94,6 +94,10 @@
             android:label="@string/help">
         </activity>
         <activity android:name=".ui.HomeActivityJava" />
+        <activity android:name=".setting.ToolbarActivity" />
+        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".setting.FillTheFormActivity" />
+        <activity android:name=".setting.AppConfigsActivity" />
 
         <service
             android:enabled="true"

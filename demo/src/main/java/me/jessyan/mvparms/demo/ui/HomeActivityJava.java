@@ -28,6 +28,7 @@ import com.coboltforge.dontmind.xbox.ui.MainActivity;
 
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
+import me.jessyan.mvparms.demo.setting.SettingActivity;
 
 
 public class HomeActivityJava extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
@@ -268,7 +269,8 @@ public class HomeActivityJava extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, UserActivity.class));
                 break;
             case 3:
-                applyFragment(fragment4);
+                startActivity(new Intent(this, SettingActivity.class));
+//                applyFragment(fragment4);
                 break;
             case 4:
                 applyFragment(fragment5);
