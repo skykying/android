@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="textInputLayout">#96ffffff</color>
+    <color name="textSecondary">#727272</color>
+    <color name="ld_textInputError">#F44336</color>
+    <color name="lovelyDialogTop">#00796B</color>
 </resources>

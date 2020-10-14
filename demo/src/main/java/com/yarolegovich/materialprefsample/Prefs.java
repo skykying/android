@@ -2,6 +2,8 @@ package com.yarolegovich.materialprefsample;
 
 import android.content.Context;
 
+import me.jessyan.mvparms.demo.R;
+
 /**
  * Created by yarolegovich on 15.05.2016.
  */

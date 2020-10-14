@@ -6,6 +6,8 @@ import com.yarolegovich.mp.MaterialPreferenceScreen;
 
 import java.util.Collections;
 
+import me.jessyan.mvparms.demo.R;
+
 /**
  * Created by yarolegovich on 15.05.2016.
  */

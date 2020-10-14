@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 
 import com.yarolegovich.mp.MaterialPreferenceScreen;
 
+import me.jessyan.mvparms.demo.R;
+
 /**
  * Created by yarolegovich on 15.05.2016.
  */

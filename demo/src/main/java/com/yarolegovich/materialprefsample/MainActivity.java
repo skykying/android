@@ -15,6 +15,9 @@ import com.yarolegovich.mp.io.MaterialPreferences;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.jessyan.mvparms.demo.R;
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
 SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -70,12 +73,12 @@ SharedPreferences.OnSharedPreferenceChangeListener{
     private LovelyInput createLovelyInputModule() {
         Map<String, Integer> iconMappings = new HashMap<>();
         Prefs keys = Prefs.keys();
-        iconMappings.put(keys.KEY_UPDATE_INTERVAL, R.drawable.ic_access_time_white_36dp);
-        iconMappings.put(keys.KEY_LOCATION, R.drawable.ic_location_on_white_36dp);
-        iconMappings.put(keys.KEY_TEMPERATURE, R.drawable.ic_thermometer_lines_white_36dp);
-        iconMappings.put(keys.KEY_DATE_FORMAT, R.drawable.ic_date_range_white_36dp);
-        iconMappings.put(keys.KEY_TIME_FORMAT, R.drawable.ic_access_time_white_36dp);
-        iconMappings.put(keys.KEY_TECHNOLOGIES, R.drawable.ic_computer_white_36dp);
+//        iconMappings.put(keys.KEY_UPDATE_INTERVAL, R.drawable.ic_access_time_white_36dp);
+//        iconMappings.put(keys.KEY_LOCATION, R.drawable.ic_location_on_white_36dp);
+//        iconMappings.put(keys.KEY_TEMPERATURE, R.drawable.ic_thermometer_lines_white_36dp);
+//        iconMappings.put(keys.KEY_DATE_FORMAT, R.drawable.ic_date_range_white_36dp);
+//        iconMappings.put(keys.KEY_TIME_FORMAT, R.drawable.ic_access_time_white_36dp);
+//        iconMappings.put(keys.KEY_TECHNOLOGIES, R.drawable.ic_computer_white_36dp);
         int topColor = ContextCompat.getColor(this, R.color.lovelyDialogTop);
         return new LovelyInput.Builder()
                 .setKeyIconMappings(iconMappings)

@@ -64,5 +64,6 @@
     <dimen name="badge_height_padding">1dp</dimen><!-- 1 -->
     <dimen name="badge_top_margin">2dp</dimen><!-- 2 -->
     <dimen name="side_margin">16dp</dimen>
-
+    <dimen name="ld_side_margin">22dp</dimen>
+    <dimen name="ld_side_cb_margin">16dp</dimen>
 </resources>

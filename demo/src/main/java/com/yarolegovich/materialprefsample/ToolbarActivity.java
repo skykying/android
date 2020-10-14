@@ -3,6 +3,8 @@ package com.yarolegovich.materialprefsample;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import me.jessyan.mvparms.demo.R;
+
 /**
  * Created by yarolegovich on 16.05.2016.
  */
