@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">MVPArms</string>
+    <string name="app_name">CLOUD DEMO</string>
+    <string name="app_title">Disinfector</string>
+
+    <string name="refreshing">Refreshing...</string>
+    <string name="textBtnRTS">RTS - Request To Send</string>
+    <string name="textBtnDTR">DTR - Data Terminal Ready</string>
+
+    <string name="title_activity_t_p">TPActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

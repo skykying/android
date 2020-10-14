@@ -34,15 +34,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import timber.log.Timber;
 
-/**
- * ================================================
- * 展示 {@link GlobalHttpHandler} 的用法
- * <p>
- * Created by JessYan on 04/09/2017 17:06
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
- */
+
 public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
     private Context context;
 
@@ -62,17 +54,20 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
     @NonNull
     @Override
     public Response onHttpResultResponse(@Nullable String httpResult, @NonNull Interceptor.Chain chain, @NonNull Response response) {
-        if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
-            try {
-                List<User> list = ArmsUtils.obtainAppComponentFromContext(context).gson().fromJson(httpResult, new TypeToken<List<User>>() {
-                }.getType());
-                User user = list.get(0);
-                Timber.w("Result ------> " + user.getLogin() + "    ||   Avatar_url------> " + user.getAvatarUrl());
-            } catch (Exception e) {
-                e.printStackTrace();
-                return response;
-            }
-        }
+
+        Timber.w("response ------>" + response);
+
+//        if (!TextUtils.isEmpty(httpResult) && RequestInterceptor.isJson(response.body().contentType())) {
+//            try {
+//                List<User> list = ArmsUtils.obtainAppComponentFromContext(context).gson().fromJson(httpResult, new TypeToken<List<User>>() {
+//                }.getType());
+//                User user = list.get(0);
+//                Timber.w("Result ------> " + user.getLogin() + "    ||   Avatar_url------> " + user.getAvatarUrl());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return response;
+//            }
+//        }
 
         /* 这里如果发现 token 过期, 可以先请求最新的 token, 然后在拿新的 token 放入 Request 里去重新请求
         注意在这个回调之前已经调用过 proceed(), 所以这里必须自己去建立网络请求, 如使用 Okhttp 使用新的 Request 去请求
@@ -101,6 +96,7 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
         /* 如果需要在请求服务器之前做一些操作, 则重新构建一个做过操作的 Request 并 return, 如增加 Header、Params 等请求信息, 不做操作则直接返回参数 request
         return chain.request().newBuilder().header("token", tokenId)
                               .build(); */
+        Timber.w("request ------> "+ request);
         return request;
     }
 }

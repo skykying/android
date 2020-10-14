@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="174dp"
+    android:layout_height="100dp"
     android:layout_marginRight="4dp"
     tools:ignore="ContentDescription"
     android:layout_marginBottom="4dp">
@@ -21,8 +21,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="3dp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         tools:text="ss" />
+
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="@color/colorPrimary"
+        android:text="id" />
 
 </androidx.cardview.widget.CardView>

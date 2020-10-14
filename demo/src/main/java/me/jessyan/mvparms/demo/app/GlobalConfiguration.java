@@ -24,42 +24,83 @@ import androidx.fragment.app.FragmentManager;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
+import com.jess.arms.http.log.FormatPrinter;
 import com.jess.arms.http.log.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 
+import java.security.KeyStore;
+import java.security.cert.CertificateException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
 
 import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.mvp.model.api.Api;
 import me.jessyan.progressmanager.ProgressManager;
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import timber.log.Timber;
 
 /**
  * ================================================
  * App 的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
- * ConfigModule 的实现类可以有无数多个, 在 Application 中只是注册回调, 并不会影响性能 (多个 ConfigModule 在多 Module 环境下尤为受用)
+ * ConfigModule 的实现类可以有无数多个, 在 Application 中只是注册回调,
+ * 并不会影响性能 (多个 ConfigModule 在多 Module 环境下尤为受用)
  * ConfigModule 接口的实现类对象是通过反射生成的, 这里会有些性能损耗
- *
- * @see com.jess.arms.base.delegate.AppDelegate
- * @see com.jess.arms.integration.ManifestParser
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog">更新日志, 升级必看!</a>
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/Issues">常见 Issues, 踩坑必看!</a>
- * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki">MVPArms 官方组件化方案 ArmsComponent, 进阶指南!</a>
- * Created by JessYan on 12/04/2017 17:25
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
  */
 public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
+
+    private void sslConfigure(OkHttpClient.Builder okhttpBuilder) {
+
+        try {
+            // Create a trust manager that does not validate certificate chains
+            final TrustManager[] trustAllCerts = new TrustManager[]{
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+
+            // Install the all-trusting trust manager
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            // Create an ssl socket factory with our all-trusting manager
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            okhttpBuilder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
+            okhttpBuilder.hostnameVerifier((hostname, session) -> true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+      }
+
+    }
 
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlobalConfigModule.Builder builder) {
         if (!BuildConfig.LOG_DEBUG) { //Release 时, 让框架不再打印 Http 请求和响应的信息
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
+
 
         builder.baseurl(Api.APP_DOMAIN)
                 //强烈建议自己自定义图片加载逻辑, 因为 arms-imageloader-glide 提供的 GlideImageLoaderStrategy 并不能满足复杂的需求
@@ -95,30 +136,30 @@ public final class GlobalConfiguration implements ConfigModule {
 //                })
 
                 //若觉得框架默认的打印格式并不能满足自己的需求, 可自行扩展自己理想的打印格式 (以下只是简单实现)
-//                .formatPrinter(new FormatPrinter() {
-//                    @Override
-//                    public void printJsonRequest(Request request, String bodyString) {
-//                        Timber.i("printJsonRequest:" + bodyString);
-//                    }
-//
-//                    @Override
-//                    public void printFileRequest(Request request) {
-//                        Timber.i("printFileRequest:" + request.url().toString());
-//                    }
-//
-//                    @Override
-//                    public void printJsonResponse(long chainMs, boolean isSuccessful, int code,
-//                                                  String headers, MediaType contentType, String bodyString,
-//                                                  List<String> segments, String message, String responseUrl) {
-//                        Timber.i("printJsonResponse:" + bodyString);
-//                    }
-//
-//                    @Override
-//                    public void printFileResponse(long chainMs, boolean isSuccessful, int code, String headers,
-//                                                  List<String> segments, String message, String responseUrl) {
-//                        Timber.i("printFileResponse:" + responseUrl);
-//                    }
-//                })
+                .formatPrinter(new FormatPrinter() {
+                    @Override
+                    public void printJsonRequest(Request request, String bodyString) {
+                        Timber.i("printJsonRequest:" + bodyString);
+                    }
+
+                    @Override
+                    public void printFileRequest(Request request) {
+                        Timber.i("printFileRequest:" + request.url().toString());
+                    }
+
+                    @Override
+                    public void printJsonResponse(long chainMs, boolean isSuccessful, int code,
+                                                  String headers, MediaType contentType, String bodyString,
+                                                  List<String> segments, String message, String responseUrl) {
+                        Timber.i("printJsonResponse:" + bodyString);
+                    }
+
+                    @Override
+                    public void printFileResponse(long chainMs, boolean isSuccessful, int code, String headers,
+                                                  List<String> segments, String message, String responseUrl) {
+                        Timber.i("printFileResponse:" + responseUrl);
+                    }
+                })
 
                 //可以自定义一个单例的线程池供全局使用
 //                .executorService(Executors.newCachedThreadPool())
@@ -137,7 +178,8 @@ public final class GlobalConfiguration implements ConfigModule {
 //                    retrofitBuilder.addConverterFactory(FastJsonConverterFactory.create());//比如使用 FastJson 替代 Gson
                 })
                 .okhttpConfiguration((context1, okhttpBuilder) -> {//这里可以自己自定义配置 Okhttp 的参数
-//                    okhttpBuilder.sslSocketFactory(); //支持 Https, 详情请百度
+                    //okhttpBuilder.sslSocketFactory(sslSocketFactory); //支持 Https, 详情请百度
+                    sslConfigure(okhttpBuilder);
                     okhttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
                     //使用一行代码监听 Retrofit／Okhttp 上传下载进度监听,以及 Glide 加载进度监听, 详细使用方法请查看 https://github.com/JessYanCoding/ProgressManager
                     ProgressManager.getInstance().with(okhttpBuilder);

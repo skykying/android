@@ -3,7 +3,7 @@ ext {
     android = [
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.3",
-            minSdkVersion    : 14,
+            minSdkVersion    : 17,
             targetSdkVersion : 29,
             versionCode      : 186,
             versionName      : "2.5.2"
@@ -38,6 +38,7 @@ ext {
             "cardview"                 : "androidx.cardview:cardview:1.0.0",
             "annotations"              : "androidx.annotation:annotation:${version["androidXSdkVersion"]}",
             "recyclerview"             : "androidx.recyclerview:recyclerview:${version["androidXSdkVersion"]}",
+            "coordinatorlayout"        : "androidx.coordinatorlayout:coordinatorlayout:${version["androidXSdkVersion"]}",
 
             //network
             "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
@@ -62,7 +63,7 @@ ext {
             "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
             "paginate"                 : "com.github.markomilos:paginate:0.5.1",
             "vlayout"                  : "com.alibaba.android:vlayout:1.1.0@aar",
-            "autosize"                 : "me.jessyan:autosize:1.2.1",
+            "autosize"                 : "me.jessyan:autosize:1.2.0",
 
             //rx1
             "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
@@ -115,6 +116,8 @@ ext {
             "logger"                   : "com.orhanobut:logger:2.2.0",
             "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
-            "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1"
+            "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
+
+
     ]
 }

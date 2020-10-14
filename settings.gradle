@@ -1,1 +1,6 @@
-include ':demo', ':arms', ':arms-autolayout', ':arms-imageloader-glide'
+include ':demo',
+        ':arms',
+        ":usb",
+        ":server",
+        ":image",
+        ":ui"

@@ -1,0 +1,33 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 28
+
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        missingDimensionStrategy 'device', 'anyDevice'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation project(':usb')
+    implementation 'com.android.support:support-v4:28.0.3'
+
+    implementation "com.android.support:appcompat-v7:28.0.3"
+    implementation "com.android.support:design:28.0.3"
+}

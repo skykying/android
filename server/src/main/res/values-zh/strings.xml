@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="address_caption">地址</string>
+    <string name="alt_check">Alt</string>
+    <string name="app_name" translatable="false">XBOX</string>
+    <string name="server_found">发现 XBOX 服务</string>
+    <string name="server_removed">未发现 XBOX 服务</string>
+    <string name="restartMDNS">重启服务发现</string>
+    <string name="scale_msg">Scale now</string>
+<string name="madeby">XBOX on Android </string>
+<string name="colormode_caption">彩色模式</string>
+<string name="color_mode">设置彩色模式</string>
+<string name="connect_button">连接</string>
+<string name="control_check">Ctrl</string>
+<string name="delete_connection">Delete</string>
+<string name="disconnect">断开</string>
+<string name="toggle_framebuffer_update">Toggle View</string>
+<string name="toggle_mouse_buttons">触发鼠标</string>
+<string name="toggle_pointer_highlight">触发位置高亮</string>
+<string name="toggle_keyboard">触发键盘</string>
+<string name="export_settings">输出</string>
+<string name="export_settings_path">Export to file</string>
+<string name="database_error_open">Error opening database!</string>
+<string name="import_export_settings">Import/Export</string>
+<string name="import_settings">Import</string>
+<string name="import_settings_file_url">Import from file or URL</string>
+    <string name="import_error_url">Improper URL given:</string>
+    <string name="import_error_io">I/O error reading configuration</string>
+    <string name="import_error_xml">XML or format error reading configuration</string>
+<string name="info">连接信息</string>
+<string name="meta_key_title">Send Key Combo</string>
+<string name="new_connection">新连接</string>
+<string name="nickname_caption">书签</string>
+<string name="discovered_servers">Machines</string>
+<string name="bookmarks">书签</string>
+<string name="savebookmark_button">保存书签</string>
+<string name="bookmark_saved">书签已保存!</string>
+<string name="bookmark_invalid">This is not a valid bookmark anymore!</string>
+<string name="password_caption">密码</string>
+<string name="keep_password_button">Keep</string>
+<string name="port_caption">Port</string>
+<string name="repeater_caption">Repeater</string>
+<string name="repeater_hint">For repeater address</string>
+<string name="repeater_clear">Don\'t use repeater</string>
+<string name="save_as_copy">Save as Copy</string>
+    <string name="repeater_save">保存</string>
+    <string name="credentials_needed_title">Credentials Needed…</string>
+<!-- Send selected metakey -->
+<string name="send_button">发送</string>
+<string name="send_key_again">Send Key Combo Again</string>
+<string name="shift_check">Shift</string>
+<string name="shortcut_label">XBOX Connection Shortcut</string>
+    <string name="shortcut_no_entries">No bookmarks yet</string>
+<string name="special_keys">Key Combo</string>
+<string name="username_caption">用户名</string>
+<string name="username_hint">For PC style</string>
+<string name="editbookmark_title">编辑书签</string>
+<string name="enterbookmarkname">Please enter a bookmark name…</string>
+<string name="bookmark_save_question">Do you want to bookmark this server?</string>
+<string name="bookmark_delete_question">Are you sure you want to delete this bookmark?</string>
+<string name="disconnect_question">Are you sure you want to disconnect?</string>
+<string name="about">关于</string>
+<string name="help">帮助</string>
+<string name="edit">编辑</string>
+<string name="save">保存</string>
+<string name="utils_title_error">错误!</string>
+<string name="support_dialog_title">Please Support XBOX</string>
+<string name="support_dialog_text">If you like XBOX, why not consider supporting its development? For the time being, you can do so easily by rating the app or by donating. Thanks!</string>
+<string name="support_dialog_yes">Yes, good idea!</string>
+<string name="support_dialog_no">No, not now.</string>
+<string name="support_dialog_neveragain">Never ask again!</string>
+<string name="firstrun_help_dialog_title">Show Help?</string>
+<string name="firstrun_help_dialog_text">Seems it\'s the first time you use XBOX. Do you want to read the app manual? It\'s not very long yet informative...</string>
+<string name="pleaserate">If you like XBOX, why not show some love by clicking the heart?</string>
+<string name="changelog_dialog_title">What\'s new…</string>
+<string name="changelog_dialog_text">
+<![CDATA[
+        If you\'d like to know what\'s new, please visit the <a href="https://raw.githubusercontent.com/bk138/multivnc/master/android/ChangeLog.md">online
+        Change Log</a>.
+    ]]>
+</string>
+</resources>
