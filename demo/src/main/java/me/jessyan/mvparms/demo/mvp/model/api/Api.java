@@ -16,6 +16,7 @@
 package me.jessyan.mvparms.demo.mvp.model.api;
 
 public interface Api {
-    String APP_DOMAIN = "https://192.168.168.102:8443";
+//    String APP_DOMAIN = "https://192.168.168.102:8443";
+    String APP_DOMAIN = "https://api.github.com";
     String REQUEST_SUCCESS = "0";
 }

@@ -17,7 +17,11 @@ package me.jessyan.mvparms.demo.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +57,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Inject
     RxPermissions mRxPermissions;
+
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
@@ -120,6 +125,26 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     public void launchActivity(@NonNull Intent intent) {
         checkNotNull(intent);
         ArmsUtils.startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_github:
+                String url = "https://github.com/Ashok-Varma/BottomNavigation";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

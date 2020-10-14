@@ -39,6 +39,6 @@ public interface MachineService {
     String HEADER_API_VERSION = "Accept: application/vnd.github.v3+json";
 
     @Headers({HEADER_API_VERSION})
-    @GET("/machines")
+    @GET("/users")
     Observable<List<Machine>> getMachines(@Query("since") int lastIdQueried, @Query("per_page") int perPage);
 }

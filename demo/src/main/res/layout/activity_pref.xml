@@ -15,17 +15,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/app_icon"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
 
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
