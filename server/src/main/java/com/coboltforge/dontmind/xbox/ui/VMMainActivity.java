@@ -79,7 +79,7 @@ import java.util.Hashtable;
 import java.util.Objects;
 
 
-public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleObserver {
+public class VMMainActivity extends AppCompatActivity implements IMDNS, LifecycleObserver {
 
     private static final String TAG = "MainActivity";
 
@@ -135,19 +135,41 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
         }
     }
 
+    public  void appToolbar(AppCompatActivity activity){
+        if (activity.findViewById(R.id.toolbar) != null) {
+            if (activity instanceof AppCompatActivity) {
+                ((AppCompatActivity) activity).setSupportActionBar(activity.findViewById(R.id.toolbar));
+                Objects.requireNonNull(((AppCompatActivity) activity).getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    activity.setActionBar(activity.findViewById(R.id.toolbar));
+                    Objects.requireNonNull(activity.getActionBar()).setDisplayShowTitleEnabled(false);
+                }
+            }
+        }
+        if (activity.findViewById(R.id.toolbar_title) != null) {
+            ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
+        }
+        if (activity.findViewById(R.id.toolbar_back) != null) {
+            activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> activity.onBackPressed());
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.smain);
+        setContentView(R.layout.vm_main_activity);
 
-        //获取toolbar
-        Toolbar toolBar = findViewById(R.id.toolbar);
-        //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可
-        toolBar.setTitle("ToolBar Title");
-        //用toolbar替换actionbar
-        setSupportActionBar(toolBar);
+        appToolbar(this);
+
+//        //获取toolbar
+//        Toolbar toolBar = findViewById(R.id.toolbar);
+//        //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可
+//        toolBar.setTitle("ToolBar Title");
+//        //用toolbar替换actionbar
+//        setSupportActionBar(toolBar);
 
         // get package debug flag and set it
         Utils.DEBUG(this);
@@ -187,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                 }
                 writeRecent(conn);
                 Log.d(TAG, "Starting NEW connection " + conn.toString());
-                Intent intent = new Intent(MainActivity.this, VncCanvasActivity.class);
+                Intent intent = new Intent(VMMainActivity.this, VncCanvasActivity.class);
                 intent.putExtra(Constants.CONNECTION, conn.Gen_getValues());
                 startActivity(intent);
             }
@@ -203,9 +225,9 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                     return;
                 }
 
-                final EditText input = new EditText(MainActivity.this);
+                final EditText input = new EditText(VMMainActivity.this);
 
-                new AlertDialog.Builder(MainActivity.this)
+                new AlertDialog.Builder(VMMainActivity.this)
                         .setMessage(getString(R.string.enterbookmarkname))
                         .setView(input)
                         .setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -293,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                 dialog.setPositiveButton(getString(R.string.support_dialog_yes), new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        startActivity(new Intent(VMMainActivity.this, AboutActivity.class));
                         try {
                             dialog.dismiss();
                         } catch (Exception e) {
@@ -353,9 +375,9 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mainmenuactivitymenu, menu);
 
-        menu.findItem(R.id.itemMDNSRestart).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.findItem(R.id.itemImportExport).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        menu.findItem(R.id.itemOpenDoc).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        menu.findItem(R.id.itemMDNSRestart).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        menu.findItem(R.id.itemImportExport).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        menu.findItem(R.id.itemOpenDoc).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 
         return true;
     }
@@ -439,7 +461,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                 public void onClick(View view) {
                     Log.d(TAG, "Starting bookmarked connection " + conn.toString());
                     writeRecent(conn);
-                    Intent intent = new Intent(MainActivity.this, VncCanvasActivity.class);
+                    Intent intent = new Intent(VMMainActivity.this, VncCanvasActivity.class);
                     intent.putExtra(Constants.CONNECTION, conn.Gen_getValues());
                     startActivity(intent);
                 }
@@ -457,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                             getString(R.string.edit)
                     };
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(VMMainActivity.this);
                     builder.setItems(items, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int item) {
                             switch (item) {
@@ -474,7 +496,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                                     break;
 
                                 case 1: // delete
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(VMMainActivity.this);
                                     builder.setMessage(getString(R.string.bookmark_delete_question))
                                             .setCancelable(false)
                                             .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
@@ -497,7 +519,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
 
                                 case 2: // edit
                                     Log.d(TAG, "Editing bookmark " + conn.get_Id());
-                                    Intent intent = new Intent(MainActivity.this, EditBookmarkActivity.class);
+                                    Intent intent = new Intent(VMMainActivity.this, EditBookmarkActivity.class);
                                     intent.putExtra(Constants.CONNECTION, conn.get_Id());
                                     startActivity(intent);
                                     break;
@@ -660,7 +682,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                             public void onClick(View view) {
                                 Log.d(TAG, "Starting discovered connection " + c.toString());
                                 writeRecent(c);
-                                Intent intent = new Intent(MainActivity.this, VncCanvasActivity.class);
+                                Intent intent = new Intent(VMMainActivity.this, VncCanvasActivity.class);
                                 intent.putExtra(Constants.CONNECTION, c.Gen_getValues());
                                 startActivity(intent);
                             }
@@ -671,7 +693,7 @@ public class MainActivity extends AppCompatActivity implements IMDNS, LifecycleO
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(VMMainActivity.this);
                                 builder.setMessage(getString(R.string.bookmark_save_question))
                                         .setCancelable(false)
                                         .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
@@ -726,7 +748,7 @@ public class MDNSServiceConnection implements ServiceConnection {
         boundMDNSService = ((MDNSService.LocalBinder) service).getService();
 
         // register our callback to be notified about changes
-        boundMDNSService.registerCallback(MainActivity.this);
+        boundMDNSService.registerCallback(VMMainActivity.this);
 
         // and force a dump of discovered connections
         boundMDNSService.dump();

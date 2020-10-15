@@ -17,14 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.coboltforge.dontmind.xbox.ui.MainActivity;
 
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
@@ -32,7 +30,7 @@ import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 import me.jessyan.mvparms.demo.setting.SettingActivity;
 
 
-public class HomeActivityJava extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
+public class HomeActivity extends BaseToolbarActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
 
@@ -67,7 +65,7 @@ public class HomeActivityJava extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_tab);
-
+        appToolbar(this);
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
 
         modeSpinner = findViewById(R.id.mode_spinner);
@@ -263,7 +261,7 @@ public class HomeActivityJava extends AppCompatActivity implements View.OnClickL
                 break;
             case 1:
                 // applyFragment(fragment2);
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, MachineActivity.class));
                 break;
             case 2:
                 // applyFragment(fragment3);
@@ -274,8 +272,7 @@ public class HomeActivityJava extends AppCompatActivity implements View.OnClickL
 //                applyFragment(fragment4);
                 break;
             case 4:
-                startActivity(new Intent(this, MachineActivity.class));
-//                applyFragment(fragment5);
+                applyFragment(fragment5);
                 break;
             default:
                 applyFragment(fragment6);

@@ -13,10 +13,11 @@ import androidx.annotation.NonNull;
 
 import com.yarolegovich.mp.MaterialPreferenceScreen;
 
+import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 import me.jessyan.mvparms.demo.R;
 
 
-public class FillTheFormActivity extends ToolbarActivity {
+public class FillTheFormActivity extends BaseToolbarActivity {
 
     private Form form = new Form();
 
@@ -25,7 +26,7 @@ public class FillTheFormActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
-        setupToolbar();
+        appToolbar(this);
 
         MaterialPreferenceScreen screen = (MaterialPreferenceScreen) findViewById(R.id.preference_screen);
         FormInitializer formInitializer = new FormInitializer(form);

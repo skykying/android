@@ -40,8 +40,10 @@ import com.jess.arms.integration.AppManager;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -458,4 +460,5 @@ public class ArmsUtils {
         Preconditions.checkState(context.getApplicationContext() instanceof App, "%s must be implements %s", context.getApplicationContext().getClass().getName(), App.class.getName());
         return ((App) context.getApplicationContext()).getAppComponent();
     }
+
 }

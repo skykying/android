@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,6 +61,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
+
     @Inject
     RecyclerView.Adapter mAdapter;
 

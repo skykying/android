@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FillTheFormActivity">
+    tools:context=".setting.FillTheFormActivity">
 
     <com.yarolegovich.mp.MaterialPreferenceScreen
         android:id="@+id/preference_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/include_title" />
 
         <com.yarolegovich.mp.MaterialPreferenceCategory
             android:layout_width="match_parent"

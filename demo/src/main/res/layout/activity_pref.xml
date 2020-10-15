@@ -7,14 +7,7 @@
     android:layout_height="wrap_content"
     tools:context=".setting.SettingActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
+    <include layout="@layout/include_title" />
 
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"

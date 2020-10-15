@@ -10,15 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.coboltforge.dontmind.xbox.ui.MainActivity;
 
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 
-public class MainUIActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView;
@@ -71,11 +68,11 @@ public class MainUIActivity extends AppCompatActivity {
         });
 
         sign_in.setOnClickListener((e)->{
-            startActivity(new Intent(this, UserActivity.class));
+            startActivity(new Intent(this, HomeActivity.class));
         });
 
         sign_up.setOnClickListener((e)->{
-            startActivity(new Intent(this, HomeActivityJava.class));
+            startActivity(new Intent(this, HomeActivity.class));
         });
     }
 }

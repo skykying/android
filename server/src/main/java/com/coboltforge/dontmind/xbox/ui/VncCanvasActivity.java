@@ -159,7 +159,7 @@ public class VncCanvasActivity extends Activity {
                 // read in this bookmarked connection
                 if (connection.Gen_read(database.getReadableDatabase(), connection.getPort())) {
                     // and set to most recently used
-                    MostRecentBean bean = MainActivity.getMostRecent(database.getReadableDatabase());
+                    MostRecentBean bean = VMMainActivity.getMostRecent(database.getReadableDatabase());
                     if (bean != null) {
                         bean.setConnectionId(connection.get_Id());
                         bean.Gen_update(database.getWritableDatabase());

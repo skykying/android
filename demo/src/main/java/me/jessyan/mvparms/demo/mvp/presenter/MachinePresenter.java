@@ -16,16 +16,20 @@
 package me.jessyan.mvparms.demo.mvp.presenter;
 
 import android.app.Application;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ComponentActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
+import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
+import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.utils.RxLifecycleUtils;
 
@@ -36,16 +40,15 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.mvparms.demo.mvp.contract.MachineContract;
-import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.model.entity.Machine;
-import me.jessyan.mvparms.demo.mvp.model.entity.User;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import timber.log.Timber;
 
 
 @ActivityScope
-public class MachinePresenter extends BasePresenter<MachineContract.Model, MachineContract.View> {
+public class MachinePresenter extends BasePresenter<MachineContract.Model, MachineContract.View> implements DefaultAdapter.OnRecyclerViewItemClickListener {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -55,7 +58,7 @@ public class MachinePresenter extends BasePresenter<MachineContract.Model, Machi
     @Inject
     List<Machine> mMachines;
     @Inject
-    RecyclerView.Adapter mAdapter;
+    DefaultAdapter mAdapter;
     private int lastUserId = 1;
     private boolean isFirst = true;
     private int preEndIndex;
@@ -73,6 +76,7 @@ public class MachinePresenter extends BasePresenter<MachineContract.Model, Machi
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         requestMachines(true);//打开 App 时自动加载列表
+        mAdapter.setOnItemClickListener(this);
     }
 
     public void requestMachines(final boolean pullToRefresh) {
@@ -158,5 +162,11 @@ public class MachinePresenter extends BasePresenter<MachineContract.Model, Machi
         this.mErrorHandler = null;
         this.mAppManager = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public void onItemClick(@NonNull View view, int viewType, @NonNull Object data, int position) {
+        Timber.tag(TAG).w("999999999999999999999999");
+        ArmsUtils.startActivity(VMMainActivity.class);
     }
 }

@@ -151,6 +151,7 @@ public class UserPresenter extends BasePresenter<UserContract.Model, UserContrac
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mAdapter.notifyItemRangeInserted(preEndIndex, users.size());
+               
                         }
                     }
                 });

@@ -10,8 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.yarolegovich.lovelyuserinput.LovelyInput;
@@ -20,10 +18,11 @@ import com.yarolegovich.mp.io.MaterialPreferences;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 import me.jessyan.mvparms.demo.R;
 
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener,
+public class SettingActivity extends BaseToolbarActivity implements View.OnClickListener,
 SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override
@@ -31,12 +30,7 @@ SharedPreferences.OnSharedPreferenceChangeListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pref);
 
-        //获取toolbar
-        Toolbar toolBar = findViewById(R.id.toolbar);
-        //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可
-        toolBar.setTitle("ToolBar Title");
-        //用toolbar替换actionbar
-        setSupportActionBar(toolBar);
+        appToolbar(this);
 
         Prefs.init(this);
 

@@ -4,9 +4,7 @@ import android.content.Context;
 
 import me.jessyan.mvparms.demo.R;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public class Prefs {
 
     private static Prefs instance;

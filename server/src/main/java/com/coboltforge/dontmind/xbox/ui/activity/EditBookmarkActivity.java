@@ -27,7 +27,7 @@ import com.coboltforge.dontmind.xbox.db.ConnectionBean;
 import com.coboltforge.dontmind.xbox.common.Constants;
 import com.coboltforge.dontmind.xbox.R;
 import com.coboltforge.dontmind.xbox.db.VncDatabase;
-import com.coboltforge.dontmind.xbox.ui.MainActivity;
+import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
 
 
 public class EditBookmarkActivity extends Activity {
@@ -116,7 +116,7 @@ public class EditBookmarkActivity extends Activity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, VMMainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
