@@ -1,13 +1,5 @@
 package com.coboltforge.dontmind.xbox.ui.activity;
 
-/*
- * Bookmark editing activity for MultiVNC.
- *
- * Copyright © 2011-2012 Christian Beier <dontmind@freeshell.org>
- */
-
-
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,7 +22,7 @@ import com.coboltforge.dontmind.xbox.db.VncDatabase;
 import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
 
 
-public class EditBookmarkActivity extends Activity {
+public class EditBookmarkActivity extends VMBaseActivity {
 
     private static final String TAG = "EditBookmarkActivity";
     private VncDatabase database;
@@ -51,7 +43,7 @@ public class EditBookmarkActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.editbookmarks);
+        setContentView(R.layout.vm_activity_editbookmarks);
         bookmarkNameText = (EditText) findViewById(R.id.textNicknameBookmark);
         ipText = (EditText) findViewById(R.id.textIPBookmark);
         portText = (EditText) findViewById(R.id.textPORTBookmark);
@@ -75,7 +67,6 @@ public class EditBookmarkActivity extends Activity {
         long connID = intent.getLongExtra(Constants.CONNECTION, 0);
         if (bookmark.Gen_read(database.getReadableDatabase(), connID)) {
             Log.d(TAG, "Successfully read connection " + connID + " from database");
-
             updateViewsFromBookmark();
         } else {
             Log.e(TAG, "Error reading connection " + connID + " from database!");
@@ -147,7 +138,6 @@ public class EditBookmarkActivity extends Activity {
         if (bookmark.getUseRepeater())
             repeaterText.setText(bookmark.getRepeaterId());
     }
-
 
     private void updateBookmarkFromViews() {
 

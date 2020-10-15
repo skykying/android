@@ -1,4 +1,4 @@
-package com.coboltforge.dontmind.xbox;
+package com.coboltforge.dontmind.xbox.protocol;
 
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
 

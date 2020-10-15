@@ -89,7 +89,6 @@
         <activity android:name="com.coboltforge.dontmind.xbox.ui.activity.AboutActivity"
             android:label="@string/about">
         </activity>
-
         <activity android:name="com.coboltforge.dontmind.xbox.ui.activity.HelpActivity"
             android:label="@string/help">
         </activity>

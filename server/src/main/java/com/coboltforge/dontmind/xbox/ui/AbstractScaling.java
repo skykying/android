@@ -1,14 +1,9 @@
-/**
- * Copyright (C) 2009 Michael A. MacDonald
- */
 package com.coboltforge.dontmind.xbox.ui;
 
 import android.widget.ImageView;
 
 
 /**
- * @author Michael A. MacDonald
- * <p>
  * A scaling mode for the VncCanvas; based on ImageView.ScaleType
  */
 abstract class AbstractScaling {

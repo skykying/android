@@ -25,9 +25,10 @@ import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
-import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
-import me.jessyan.mvparms.demo.setting.SettingActivity;
+
+import me.jessyan.mvparms.demo.setting.AppConfigsFragment;
+import me.jessyan.mvparms.demo.ui.fragment.MachineFragment;
+import me.jessyan.mvparms.demo.ui.fragment.MessageFragment;
 
 
 public class HomeActivity extends BaseToolbarActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
@@ -54,6 +55,9 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     TextFragment fragment4;
     TextFragment fragment5;
     TextFragment fragment6;
+    AppConfigsFragment fragment7;
+    MachineFragment fragment8;
+    MessageFragment fragment9;
 
     @Nullable
     TextBadgeItem numberBadgeItem;
@@ -65,6 +69,7 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_tab);
+
         appToolbar(this);
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
 
@@ -85,6 +90,9 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         fragment4 = TextFragment.newTextFragmentInstance(getString(R.string.para4));
         fragment5 = TextFragment.newTextFragmentInstance(getString(R.string.para5));
         fragment6 = TextFragment.newTextFragmentInstance(getString(R.string.para6));
+        fragment7 = AppConfigsFragment.newAppConfigsFragment("");
+        fragment8 =  MachineFragment.newMachineFragment("");
+        fragment9 =  MessageFragment.newMessageFragment("");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"MODE_DEFAULT", "MODE_FIXED", "MODE_SHIFTING", "MODE_FIXED_NO_TITLE", "MODE_SHIFTING_NO_TITLE"});
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -116,6 +124,15 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         toggleBadge.setOnClickListener(this);
 
         bottomNavigationBar.setTabSelectedListener(this);
+
+        message.setVisibility(View.INVISIBLE);
+        modeSpinner.setVisibility(View.INVISIBLE);
+        bgSpinner.setVisibility(View.INVISIBLE);
+        shapeSpinner.setVisibility(View.INVISIBLE);
+        itemSpinner.setVisibility(View.INVISIBLE);
+        autoHide.setVisibility(View.INVISIBLE);
+        toggleHide.setVisibility(View.INVISIBLE);
+        toggleBadge.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -260,19 +277,19 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
                 applyFragment(fragment1);
                 break;
             case 1:
-                // applyFragment(fragment2);
-                startActivity(new Intent(this, MachineActivity.class));
+                 applyFragment(fragment8);
+//                startActivity(new Intent(this, MachineActivity.class));
                 break;
             case 2:
-                // applyFragment(fragment3);
-                startActivity(new Intent(this, UserActivity.class));
+                 applyFragment(fragment9);
+//                startActivity(new Intent(this, UserActivity.class));
                 break;
             case 3:
-                startActivity(new Intent(this, SettingActivity.class));
-//                applyFragment(fragment4);
+//                startActivity(new Intent(this, SettingActivity.class));
+                applyFragment(fragment7);
                 break;
             case 4:
-                applyFragment(fragment5);
+                applyFragment(fragment7);
                 break;
             default:
                 applyFragment(fragment6);

@@ -1,14 +1,8 @@
-/**
- * Copyright (C) 2009 Michael A. MacDonald
- */
 package com.coboltforge.dontmind.xbox.ui;
 
 import android.graphics.Matrix;
 import android.widget.ImageView.ScaleType;
 
-/**
- * @author Michael A. MacDonald
- */
 class ZoomScaling extends AbstractScaling {
 
     static final String TAG = "ZoomScaling";
@@ -18,10 +12,6 @@ class ZoomScaling extends AbstractScaling {
     float minimumScale;
     private Matrix matrix;
 
-    /**
-     * @param id
-     * @param scaleType
-     */
     public ZoomScaling() {
         super(AbstractScaling.zoomableId, ScaleType.MATRIX);
         matrix = new Matrix();

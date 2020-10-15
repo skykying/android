@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2009 Michael A. MacDonald
- */
 package com.coboltforge.dontmind.xbox.ui;
 
 import android.annotation.SuppressLint;
@@ -17,8 +14,6 @@ import com.antlersoft.android.bc.OnScaleGestureListener;
 
 /**
  * An AbstractInputHandler that uses GestureDetector to detect standard gestures in touch events
- *
- * @author Michael A. MacDonald
  */
 @SuppressLint("NewApi")
 public abstract class AbstractGestureInputHandler extends GestureDetector.SimpleOnGestureListener implements OnScaleGestureListener {

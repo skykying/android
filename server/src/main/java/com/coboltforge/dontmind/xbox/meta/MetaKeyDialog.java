@@ -22,7 +22,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.coboltforge.dontmind.xbox.ConnectionSettable;
+import com.coboltforge.dontmind.xbox.common.ConnectionSettable;
 import com.coboltforge.dontmind.xbox.R;
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
 import com.coboltforge.dontmind.xbox.db.MetaKeyBean;

@@ -4,9 +4,8 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dip"
-        android:paddingTop="10dip"
-        android:textSize="12dp"
+        android:padding="20dip"
+        android:textSize="14dp"
         android:text="@string/discovered_servers"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -15,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+          android:padding="20dip"
         android:visibility="gone" />
     
     <LinearLayout
@@ -22,6 +22,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dip" />
+        android:padding="20dp" />
 
 </merge>

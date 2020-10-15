@@ -5,6 +5,7 @@
     android:scrollbars="vertical" >
 
     <!-- this remoteInputStream focusable to start with view focus here! -->
+    <include layout="@layout/include_toolbar"/>
 
     <LinearLayout
         android:layout_width="fill_parent"

@@ -11,4 +11,8 @@
 		android:title="@string/about"
 		android:icon="@drawable/ic_info_outline_white_48dp"
 		/>
+	<item android:id="@+id/itemAbout"
+		android:title="@string/about"
+		android:icon="@drawable/ic_info_outline_white_48dp"
+		/>
 </menu>

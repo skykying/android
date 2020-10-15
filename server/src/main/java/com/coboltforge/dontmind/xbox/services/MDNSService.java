@@ -21,7 +21,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
-import com.coboltforge.dontmind.xbox.IMDNS;
+import com.coboltforge.dontmind.xbox.protocol.IMDNS;
 import com.coboltforge.dontmind.xbox.utils.Utils;
 
 import java.io.IOException;

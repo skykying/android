@@ -4,8 +4,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dip"
-        android:paddingTop="10dip"
+        android:padding="20dip"
         android:textSize="14dp"
         android:text="@string/bookmarks"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -15,6 +14,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dip" />
+        android:padding="20dip" />
 
 </merge>

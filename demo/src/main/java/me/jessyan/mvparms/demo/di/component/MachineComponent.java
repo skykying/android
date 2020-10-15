@@ -7,11 +7,8 @@ import com.jess.arms.di.scope.ActivityScope;
 import dagger.BindsInstance;
 import dagger.Component;
 import me.jessyan.mvparms.demo.di.module.MachineModule;
-import me.jessyan.mvparms.demo.di.module.UserModule;
 import me.jessyan.mvparms.demo.mvp.contract.MachineContract;
-import me.jessyan.mvparms.demo.mvp.contract.UserContract;
 import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
-import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 
 
 @ActivityScope

@@ -493,7 +493,6 @@ public class VNCConn {
     //
     // Handle a CopyRect rectangle.
     //
-
     public final int getFramebufferWidth() {
         try {
             return bitmapData.framebufferwidth;
@@ -525,7 +524,6 @@ public class VNCConn {
     //
     // Handle a CoRRE-encoded rectangle.
     //
-
     public void unlockFramebuffer() {
         bitmapDataPixelsLock.unlock();
     }
@@ -533,7 +531,6 @@ public class VNCConn {
     //
     // Handle a Hextile-encoded rectangle.
     //
-
     public final ConnectionBean getConnSettings() {
         return connSettings;
     }

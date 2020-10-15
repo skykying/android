@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yarolegovich.mp.MaterialPreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mpc_title="@string/performance">
+
+        <com.yarolegovich.mp.MaterialChoicePreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="24 hours"
+            app:mp_entry_values="@array/update_intervals"
+            app:mp_key="@string/pkey_update_interval"
+            app:mp_show_value="onRight"
+            app:mp_title="@string/update_interval" />
+
+        <com.yarolegovich.mp.MaterialSwitchPreference
+            android:id="@+id/pref_auto_loc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="true"
+            app:mp_key="@string/pkey_auto_location"
+            app:mp_title="@string/auto_location" />
+
+        <com.yarolegovich.mp.MaterialEditTextPreference
+            android:id="@+id/pref_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="@string/pdef_location"
+            app:mp_key="@string/pkey_location"
+            app:mp_show_value="onRight"
+            app:mp_title="@string/location" />
+
+    </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+    <com.yarolegovich.mp.MaterialPreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mpc_title="@string/appearance">
+
+        <com.yarolegovich.mp.MaterialChoicePreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="@string/pdef_temp_units"
+            app:mp_entry_values="@array/temperature_units"
+            app:mp_key="@string/pkey_temperature"
+            app:mp_show_value="onRight"
+            app:mp_title="@string/temp_units" />
+
+        <com.yarolegovich.mp.MaterialChoicePreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="Tue, Apr 20"
+            app:mp_entry_values="@array/date_formats"
+            app:mp_key="@string/pkey_date_format"
+            app:mp_show_value="onRight"
+            app:mp_title="@string/date_format" />
+
+        <com.yarolegovich.mp.MaterialChoicePreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_default_value="HH:mm"
+            app:mp_entry_descriptions="@array/time_format_descriptions"
+            app:mp_entry_values="@array/time_formats"
+            app:mp_key="@string/pkey_time_format"
+            app:mp_show_value="onRight"
+            app:mp_title="@string/time_format" />
+
+    </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+    <com.yarolegovich.mp.MaterialPreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mpc_title="@string/help_improve">
+
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_icon="@drawable/ic_star_border_black_24dp"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/rate_the_lib" />
+
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/donate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_icon="@drawable/ic_local_atm_black_24dp"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/donate" />
+
+    </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+</LinearLayout>

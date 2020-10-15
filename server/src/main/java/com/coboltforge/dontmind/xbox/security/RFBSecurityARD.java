@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.coboltforge.dontmind.xbox;
+package com.coboltforge.dontmind.xbox.security;
 
 import com.coboltforge.dontmind.xbox.protocol.RfbProto;
 

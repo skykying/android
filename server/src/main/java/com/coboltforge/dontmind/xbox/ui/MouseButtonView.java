@@ -2,8 +2,6 @@ package com.coboltforge.dontmind.xbox.ui;
 
 /*
  * Views for virtual mouse buttons.
- *
- * Copyright © 2011-2012 Christian Beier <dontmind@freeshell.org>
  */
 
 import android.content.Context;
@@ -204,7 +202,7 @@ public class MouseButtonView extends View {
      * Scale up delta when delta remoteInputStream big. This allows fast mouse movement when
      * user remoteInputStream flinging.
      *
-     * @param deltaX
+     * @param delta
      * @return
      */
     private float fineCtrlScale(float delta) {

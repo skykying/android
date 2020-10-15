@@ -6,7 +6,6 @@ package com.coboltforge.dontmind.xbox.ui.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +37,7 @@ import java.net.URLConnection;
 /**
  * @author Michael A. MacDonald
  */
-public class ImportExportActivity extends Activity {
+public class ImportExportActivity extends VMBaseActivity {
 
     private final static String TAG = "ImportExportActivity";
 
@@ -51,7 +50,7 @@ public class ImportExportActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.importexport);
+        setContentView(R.layout.vm_activity_importexport);
         setTitle(R.string.import_export_settings);
         _textLoadUrl = findViewById(R.id.textImportUrl);
         _textSaveUrl = findViewById(R.id.textExportPath);

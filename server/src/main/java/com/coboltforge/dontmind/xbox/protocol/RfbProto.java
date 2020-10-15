@@ -30,7 +30,7 @@ import android.util.Log;
 
 import com.coboltforge.dontmind.xbox.utils.DH;
 import com.coboltforge.dontmind.xbox.utils.DesCipher;
-import com.coboltforge.dontmind.xbox.RFBSecurityARD;
+import com.coboltforge.dontmind.xbox.security.RFBSecurityARD;
 import com.coboltforge.dontmind.xbox.ui.VNCConn;
 import com.coboltforge.dontmind.xbox.common.CapabilityInfo;
 import com.coboltforge.dontmind.xbox.utils.CapsContainer;

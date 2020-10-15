@@ -25,13 +25,12 @@ import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -41,7 +40,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -53,7 +51,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -62,7 +59,7 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import com.coboltforge.dontmind.xbox.color.COLORMODEL;
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
 import com.coboltforge.dontmind.xbox.common.Constants;
-import com.coboltforge.dontmind.xbox.IMDNS;
+import com.coboltforge.dontmind.xbox.protocol.IMDNS;
 import com.coboltforge.dontmind.xbox.db.MostRecentBean;
 import com.coboltforge.dontmind.xbox.R;
 import com.coboltforge.dontmind.xbox.db.VncDatabase;
@@ -71,6 +68,7 @@ import com.coboltforge.dontmind.xbox.ui.activity.AboutActivity;
 import com.coboltforge.dontmind.xbox.ui.activity.EditBookmarkActivity;
 import com.coboltforge.dontmind.xbox.ui.activity.HelpActivity;
 import com.coboltforge.dontmind.xbox.ui.activity.ImportExportActivity;
+import com.coboltforge.dontmind.xbox.ui.activity.VMBaseActivity;
 import com.coboltforge.dontmind.xbox.utils.Utils;
 
 import java.util.ArrayList;
@@ -79,7 +77,7 @@ import java.util.Hashtable;
 import java.util.Objects;
 
 
-public class VMMainActivity extends AppCompatActivity implements IMDNS, LifecycleObserver {
+public class VMMainActivity extends VMBaseActivity implements IMDNS, LifecycleObserver {
 
     private static final String TAG = "MainActivity";
 
@@ -164,13 +162,6 @@ public class VMMainActivity extends AppCompatActivity implements IMDNS, Lifecycl
 
         appToolbar(this);
 
-//        //获取toolbar
-//        Toolbar toolBar = findViewById(R.id.toolbar);
-//        //主标题，必须在setSupportActionBar之前设置，否则无效，如果放在其他位置，则直接setTitle即可
-//        toolBar.setTitle("ToolBar Title");
-//        //用toolbar替换actionbar
-//        setSupportActionBar(toolBar);
-
         // get package debug flag and set it
         Utils.DEBUG(this);
         // update appstart cound
@@ -250,106 +241,9 @@ public class VMMainActivity extends AppCompatActivity implements IMDNS, Lifecycl
         });
 
         database = new VncDatabase(this);
-
-
         final SharedPreferences settings = getSharedPreferences(Constants.PREFSNAME, MODE_PRIVATE);
-
-
-        //showInformation(settings,savedInstanceState);
-
-        /*
-         * show changelog if version changed
-         */
-        try {
-            //current version
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            int versionCode = packageInfo.versionCode;
-
-            int lastVersionCode = settings.getInt("lastVersionCode", 0);
-
-            if (1 < 0) {
-                //if (lastVersionCode < versionCode) {
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putInt("lastVersionCode", versionCode);
-                editor.commit();
-
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle(getString(R.string.changelog_dialog_title));
-                dialog.setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-
-                WebView wv = new WebView(getApplicationContext());
-                wv.loadData(getString(R.string.changelog_dialog_text), "text/html", "utf-8");
-                dialog.setView(wv);
-
-                dialog.setPositiveButton(getString(android.R.string.ok), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            dialog.dismiss();
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-
-                dialog.show();
-            }
-
-        } catch (NameNotFoundException e) {
-            Log.w(TAG, "Unable to get version code. Will not show changelog", e);
-        }
-
     }
 
-
-    private void showInformation(SharedPreferences settings, Bundle savedInstanceState) {
-        /*
-         * show support dialog on third (and maybe later) runs
-         */
-        if (Utils.appstarts > 2) {
-            if (settings.getBoolean(Constants.PREFS_KEY_SUPPORTDLG, true) && savedInstanceState == null) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setTitle(getString(R.string.support_dialog_title));
-                dialog.setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-                dialog.setMessage(R.string.support_dialog_text);
-
-                dialog.setPositiveButton(getString(R.string.support_dialog_yes), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(VMMainActivity.this, AboutActivity.class));
-                        try {
-                            dialog.dismiss();
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-                dialog.setNeutralButton(getString(R.string.support_dialog_no), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            dialog.dismiss();
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-                dialog.setNegativeButton(getString(R.string.support_dialog_neveragain), new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences settings = getSharedPreferences(Constants.PREFSNAME, MODE_PRIVATE);
-                        SharedPreferences.Editor ed = settings.edit();
-                        ed.putBoolean(Constants.PREFS_KEY_SUPPORTDLG, false);
-                        ed.commit();
-
-                        try {
-                            dialog.dismiss();
-                        } catch (Exception e) {
-                        }
-                    }
-                });
-
-                dialog.show();
-            }
-        }
-    }
 
     protected void onDestroy() {
 
@@ -373,11 +267,20 @@ public class VMMainActivity extends AppCompatActivity implements IMDNS, Lifecycl
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mainmenuactivitymenu, menu);
+        getMenuInflater().inflate(R.menu.vm_conn_menu, menu);
 
         menu.findItem(R.id.itemMDNSRestart).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         menu.findItem(R.id.itemImportExport).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
         menu.findItem(R.id.itemOpenDoc).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+        menu.findItem(R.id.itemAbout).setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+
+        for(int i = 0; i < menu.size(); i++){
+            Drawable drawable = menu.getItem(i).getIcon();
+            if(drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
 
         return true;
     }
@@ -405,9 +308,12 @@ public class VMMainActivity extends AppCompatActivity implements IMDNS, Lifecycl
             Intent intent = new Intent(this, HelpActivity.class);
             this.startActivity(intent);
         }
+        if (id == R.id.itemAbout) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            this.startActivity(intent);
+        }
         return true;
     }
-
 
     protected void onStart() {
         super.onStart();

@@ -22,7 +22,6 @@ package com.coboltforge.dontmind.xbox.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -32,6 +31,8 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -55,7 +56,7 @@ import android.widget.Toast;
 
 import com.coboltforge.dontmind.xbox.color.COLORMODEL;
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
-import com.coboltforge.dontmind.xbox.ConnectionSettable;
+import com.coboltforge.dontmind.xbox.common.ConnectionSettable;
 import com.coboltforge.dontmind.xbox.common.Constants;
 import com.coboltforge.dontmind.xbox.db.MetaKeyBean;
 import com.coboltforge.dontmind.xbox.meta.MetaKeyDialog;
@@ -64,6 +65,7 @@ import com.coboltforge.dontmind.xbox.R;
 import com.coboltforge.dontmind.xbox.db.VncDatabase;
 import com.coboltforge.dontmind.xbox.ui.activity.AboutActivity;
 import com.coboltforge.dontmind.xbox.ui.activity.HelpActivity;
+import com.coboltforge.dontmind.xbox.ui.activity.VMBaseActivity;
 import com.coboltforge.dontmind.xbox.ui.control.ZoomControls;
 import com.coboltforge.dontmind.xbox.ui.view.TouchPointView;
 import com.coboltforge.dontmind.xbox.utils.Utils;
@@ -74,12 +76,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class VncCanvasActivity extends Activity {
+public class VncCanvasActivity extends VMBaseActivity {
 
 
     static final long ZOOM_HIDE_DELAY_MS = 2500;
     private final static String TAG = "VncCanvasActivity";
-
 
     public VncCanvas vncCanvas;
     public VncDatabase database;
@@ -115,7 +116,6 @@ public class VncCanvasActivity extends Activity {
         database = new VncDatabase(this);
 
         mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
 
         inputHandler = new MightyInputHandler();
         inputHandler.init();
@@ -397,7 +397,17 @@ public class VncCanvasActivity extends Activity {
     @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.vnccanvasactivitymenu, menu);
+        getMenuInflater().inflate(R.menu.vm_ops_menu, menu);
+
+        for(int i = 0; i < menu.size(); i++){
+            MenuItem mitem = menu.getItem(i);
+            mitem.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+            Drawable drawable = mitem.getIcon();
+            if(drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
 
         return true;
     }

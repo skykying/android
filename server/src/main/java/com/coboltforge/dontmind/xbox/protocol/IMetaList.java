@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2009 Michael A. MacDonald
  */
-package com.coboltforge.dontmind.xbox;
+package com.coboltforge.dontmind.xbox.protocol;
 
 import com.antlersoft.android.db.FieldAccessor;
 import com.antlersoft.android.db.TableInterface;

@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2009 Michael A. MacDonald
- */
 package com.coboltforge.dontmind.xbox.ui;
 
 import android.graphics.Bitmap;
@@ -17,9 +14,6 @@ import com.coboltforge.dontmind.xbox.utils.Utils;
 
 import java.io.IOException;
 
-/**
- * @author Michael A. MacDonald
- */
 public class LargeBitmapData extends AbstractBitmapData {
 
     /**
@@ -55,8 +49,7 @@ public class LargeBitmapData extends AbstractBitmapData {
     /**
      * @param p             Protocol implementation
      * @param c             View that will display screen
-     * @param displayWidth
-     * @param displayHeight
+     * @param conn          VNCConn
      * @param capacity      Max process heap size in bytes
      */
     LargeBitmapData(RfbProto p, VncCanvas c, VNCConn conn, int capacity) {

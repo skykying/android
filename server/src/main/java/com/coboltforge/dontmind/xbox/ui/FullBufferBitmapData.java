@@ -1,6 +1,3 @@
-/**
- * Copyright (c) 2010 Michael A. MacDonald
- */
 package com.coboltforge.dontmind.xbox.ui;
 
 import android.graphics.Paint;
@@ -11,10 +8,8 @@ import com.coboltforge.dontmind.xbox.utils.Utils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import android.util.Log;
 
-/**
- * @author Michael A. MacDonald
- */
 public class FullBufferBitmapData extends AbstractBitmapData {
 
     /**
@@ -35,8 +30,9 @@ public class FullBufferBitmapData extends AbstractBitmapData {
         framebufferheight = rfb.framebufferHeight;
         bitmapwidth = Utils.nextPow2(framebufferwidth);
         bitmapheight = Utils.nextPow2(framebufferheight);
-        android.util.Log.i("FBBM", "bitmapsize = (" + bitmapwidth + "," + bitmapheight + ")");
         bitmapPixels = new int[bitmapwidth * bitmapheight];
+
+        Log.i("FBBM", "bitmapsize = (" + bitmapwidth + "," + bitmapheight + ")");
     }
 
     /* (non-Javadoc)
@@ -101,7 +97,6 @@ public class FullBufferBitmapData extends AbstractBitmapData {
     @Override
     void updateBitmap(int x, int y, int w, int h) {
         // Don't need to do anything here
-
     }
 
     /* (non-Javadoc)

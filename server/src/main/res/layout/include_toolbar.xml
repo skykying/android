@@ -7,6 +7,8 @@
     android:layout_height="50dp"
     android:background="?attr/colorPrimary"
     app:contentInsetStart="0dp"
+    app:popupTheme="@style/AppTheme"
+    android:theme="@style/ToolbarPopupTheme"
     tools:ignore="ContentDescription">
 
     <RelativeLayout

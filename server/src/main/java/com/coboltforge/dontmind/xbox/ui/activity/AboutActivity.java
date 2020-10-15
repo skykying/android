@@ -1,14 +1,5 @@
 package com.coboltforge.dontmind.xbox.ui.activity;
 
-
-/*
- * About activity for MultiVNC.
- *
- * Copyright © 2011-2012 Christian Beier <dontmind@freeshell.org>
- */
-
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -20,12 +11,12 @@ import com.coboltforge.dontmind.xbox.R;
 import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
 
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends VMBaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        setContentView(R.layout.vm_activity_about);
 
         //Get version number/name and add it to the screen
         PackageInfo pinfo;

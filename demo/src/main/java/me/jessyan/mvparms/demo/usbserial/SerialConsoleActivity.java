@@ -34,6 +34,8 @@ import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
@@ -50,7 +52,7 @@ import me.jessyan.mvparms.demo.usbserial.util.HexDump;
  *
  * @author mike wakerly (opensource@hoho.com)
  */
-public class SerialConsoleActivity extends Activity implements SerialInputOutputManager.Listener  {
+public class SerialConsoleActivity extends AppCompatActivity implements SerialInputOutputManager.Listener  {
 
     private final String TAG = SerialConsoleActivity.class.getSimpleName();
 

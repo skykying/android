@@ -20,6 +20,8 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:paddingStart="@dimen/paddingLeft"
+            android:paddingEnd="@dimen/paddingRight"
             android:orientation="vertical">
 
         <include
