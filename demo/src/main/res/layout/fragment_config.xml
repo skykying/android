@@ -74,25 +74,5 @@
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 
-    <com.yarolegovich.mp.MaterialPreferenceCategory
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mpc_title="@string/help_improve">
-
-        <com.yarolegovich.mp.MaterialRightIconPreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_star_border_black_24dp"
-            app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/rate_the_lib" />
-
-        <com.yarolegovich.mp.MaterialRightIconPreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_local_atm_black_24dp"
-            app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/donate" />
-
-    </com.yarolegovich.mp.MaterialPreferenceCategory>
 
 </LinearLayout>

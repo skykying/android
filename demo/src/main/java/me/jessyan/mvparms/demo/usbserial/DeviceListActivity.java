@@ -1,6 +1,5 @@
 package me.jessyan.mvparms.demo.usbserial;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TwoLineListItem;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -36,13 +33,9 @@ import java.util.List;
 
 import me.jessyan.mvparms.demo.BuildConfig;
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 
-/**
- * Shows a {@link ListView} of available USB devices.
- *
- * @author mike wakerly (opensource@hoho.com)
- */
-public class DeviceListActivity extends AppCompatActivity {
+public class DeviceListActivity extends BaseToolbarActivity {
 
     private final String TAG = DeviceListActivity.class.getSimpleName();
 
@@ -79,7 +72,7 @@ public class DeviceListActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_usb_list);
         final Context context = this;
 
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);

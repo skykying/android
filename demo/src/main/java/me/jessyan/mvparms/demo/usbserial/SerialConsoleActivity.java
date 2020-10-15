@@ -21,7 +21,6 @@
 
 package me.jessyan.mvparms.demo.usbserial;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.usb.UsbDeviceConnection;
@@ -34,8 +33,6 @@ import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
@@ -44,6 +41,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 import me.jessyan.mvparms.demo.usbserial.util.HexDump;
 
 /**
@@ -52,7 +50,7 @@ import me.jessyan.mvparms.demo.usbserial.util.HexDump;
  *
  * @author mike wakerly (opensource@hoho.com)
  */
-public class SerialConsoleActivity extends AppCompatActivity implements SerialInputOutputManager.Listener  {
+public class SerialConsoleActivity extends BaseToolbarActivity implements SerialInputOutputManager.Listener  {
 
     private final String TAG = SerialConsoleActivity.class.getSimpleName();
 
@@ -81,7 +79,7 @@ public class SerialConsoleActivity extends AppCompatActivity implements SerialIn
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.serial_console);
+        setContentView(R.layout.activity_serial_console);
         mTitleTextView = (TextView) findViewById(R.id.demoTitle);
         mDumpTextView = (TextView) findViewById(R.id.consoleText);
         mScrollView = (ScrollView) findViewById(R.id.demoScroller);
