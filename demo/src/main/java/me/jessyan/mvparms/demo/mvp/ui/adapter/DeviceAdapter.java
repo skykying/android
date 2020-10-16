@@ -53,6 +53,6 @@ public class DeviceAdapter extends DefaultAdapter<Device> {
 
     @Override
     public int getLayoutId(int viewType) {
-        return R.layout.recycle_list;
+        return R.layout.recycle_device_list;
     }
 }

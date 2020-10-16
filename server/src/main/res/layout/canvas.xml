@@ -6,6 +6,47 @@
     android:layout_height="fill_parent"
     >
 
+	<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center|bottom">
+
+    <include 
+    	layout="@layout/include_toolbar">
+	</include>
+
+	<LinearLayout
+	      android:id="@+id/virtualmousebuttons"
+	      android:orientation="horizontal"
+	      android:layout_width="fill_parent"
+		  android:layout_gravity="center_vertical"
+	      android:layout_height="50dip">
+	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	      	  android:id="@+id/mousebutton1"
+	          android:gravity="center_horizontal"
+	          android:background="#997f7f7f"
+	          android:layout_width="wrap_content"
+	          android:layout_height="fill_parent"
+	          android:layout_weight="1"/>
+	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	       	  android:id="@+id/mousebutton2"
+	          android:gravity="center_horizontal"
+	          android:background="#bb7f7f7f"
+	          android:layout_width="wrap_content"
+	          android:layout_height="fill_parent"
+	          android:layout_weight="1"/>
+	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	          android:id="@+id/mousebutton3"
+	          android:gravity="center_horizontal"
+	          android:background="#997f7f7f"
+	          android:layout_width="wrap_content"
+	          android:layout_height="fill_parent"
+	          android:layout_weight="1"/>
+	</LinearLayout>
+
+	</LinearLayout>
+
 	<com.coboltforge.dontmind.xbox.ui.VncCanvas
     	android:id="@+id/vnc_canvas"
     	android:layout_width="fill_parent"
@@ -37,47 +78,6 @@
 		android:layout_gravity="end|top"
 		android:src="@drawable/ic_menu_black_24dp"
 		android:alpha="0.6"
-		android:layout_margin="16dp" />
-
-
-	<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center|bottom">
-
-
-
-	  <LinearLayout
-	      android:id="@+id/virtualmousebuttons"
-	      android:orientation="horizontal"
-	      android:layout_width="fill_parent"
-	      android:layout_height="70dip">
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
-	      	  android:id="@+id/mousebutton1"
-	          android:gravity="center_horizontal"
-	          android:background="#997f7f7f"
-	          android:layout_width="wrap_content"
-	          android:layout_height="fill_parent"
-	          android:layout_weight="1"/>
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
-	       	  android:id="@+id/mousebutton2"
-	          android:gravity="center_horizontal"
-	          android:background="#bb7f7f7f"
-	          android:layout_width="wrap_content"
-	          android:layout_height="fill_parent"
-	          android:layout_weight="1"/>
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
-	          android:id="@+id/mousebutton3"
-	          android:gravity="center_horizontal"
-	          android:background="#997f7f7f"
-	          android:layout_width="wrap_content"
-	          android:layout_height="fill_parent"
-	          android:layout_weight="1"/>
-
-	  </LinearLayout>
-
-	 </LinearLayout>
-
+		android:layout_margin="1dp" />
 
 </merge>

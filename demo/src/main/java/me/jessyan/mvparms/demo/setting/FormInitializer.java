@@ -1,6 +1,7 @@
 package me.jessyan.mvparms.demo.setting;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.yarolegovich.mp.io.StorageModule;
 
@@ -8,10 +9,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public class FormInitializer implements StorageModule {
+    String TAG = FormInitializer.class.getSimpleName();
 
     private Form form;
 
@@ -22,11 +22,12 @@ public class FormInitializer implements StorageModule {
     @Override
     public void saveBoolean(String key, boolean value) {
         form.setIsAdequate(value);
+        Log.i(TAG,"saveBoolean");
     }
 
     @Override
     public void saveString(String key, String value) {
-
+        Log.i(TAG,"saveString");
     }
 
     @Override
@@ -36,25 +37,30 @@ public class FormInitializer implements StorageModule {
         } else if (key.equals(Prefs.keys().KEY_YEARS_OF_EXP)) {
             form.setYearsOfExp(value);
         }
+        Log.i(TAG,"saveInt");
     }
 
     @Override
     public void saveStringSet(String key, Set<String> value) {
         form.setTechnologies(value);
+        Log.i(TAG,"saveStringSet");
     }
 
     @Override
     public boolean getBoolean(String key, boolean defaultVal) {
+        Log.i(TAG,"getBoolean");
         return form.isAdequate();
     }
 
     @Override
     public String getString(String key, String defaultVal) {
+        Log.i(TAG,"getString");
         return "";
     }
 
     @Override
     public int getInt(String key, int defaultVal) {
+        Log.i(TAG,"getInt");
         if (key.equals(Prefs.keys().KEY_FAV_COLOR)) {
             return form.getFavoriteColor();
         } else if (key.equals(Prefs.keys().KEY_YEARS_OF_EXP)) {
@@ -66,6 +72,7 @@ public class FormInitializer implements StorageModule {
 
     @Override
     public Set<String> getStringSet(String key, Set<String> defaultVal) {
+        Log.i(TAG,"getStringSet");
         return form.getTechnologies();
     }
 
@@ -76,6 +83,7 @@ public class FormInitializer implements StorageModule {
         outState.putInt(keys.KEY_FAV_COLOR, form.getFavoriteColor());
         outState.putStringArrayList(keys.KEY_TECHNOLOGIES, new ArrayList<>(form.getTechnologies()));
         outState.putBoolean(keys.KEY_IS_ADEQUATE, form.isAdequate());
+        Log.i(TAG,"onSaveInstanceState");
     }
 
     @Override
@@ -87,5 +95,6 @@ public class FormInitializer implements StorageModule {
             form.setFavoriteColor(savedState.getInt(keys.KEY_FAV_COLOR));
             form.setIsAdequate(savedState.getBoolean(keys.KEY_IS_ADEQUATE));
         }
+        Log.i(TAG,"onRestoreInstanceState");
     }
 }

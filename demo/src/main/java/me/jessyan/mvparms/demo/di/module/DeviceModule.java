@@ -59,7 +59,7 @@ public abstract class DeviceModule {
     @ActivityScope
     @Provides
     static RecyclerView.LayoutManager provideLayoutManager(DeviceContract.View view) {
-        return new GridLayoutManager(view.getActivity(), 2);
+        return new GridLayoutManager(view.getActivity(), 1);
     }
 
     @ActivityScope

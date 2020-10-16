@@ -28,6 +28,7 @@ import me.jessyan.mvparms.demo.ui.TextFragment;
 public class AppConfigsFragment extends Fragment {
     private String msg = null;
     public static String KEY_MESSAGE = "message";
+    private Form form = new Form();
 
     @Override
     public void onAttach(Context context) {
@@ -39,9 +40,20 @@ public class AppConfigsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_config, container,false);
-        //MaterialPreferenceScreen screen = (MaterialPreferenceScreen)view.findViewById(R.id.preference_screen);
+        MaterialPreferenceScreen screen = (MaterialPreferenceScreen)view.findViewById(R.id.preference_screen);
         //screen.setVisibilityController(R.id.pref_auto_loc, Collections.singletonList(R.id.pref_location), false);
+        
+        FormInitializer formInitializer = new FormInitializer(form);
+        formInitializer.onRestoreInstanceState(savedInstanceState);
+        screen.setStorageModule(formInitializer);
+
         return view;
+    }
+
+     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        new FormInitializer(form).onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -57,6 +69,7 @@ public class AppConfigsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public static AppConfigsFragment newAppConfigsFragment(String message) {

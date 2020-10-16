@@ -66,6 +66,10 @@ dependencies {
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
     implementation rootProject.ext.dependencies["lifecyclemodel"]
     implementation rootProject.ext.dependencies["multidex"]
+    implementation(rootProject.ext.dependencies["materialdatetimepicker"]){
+        exclude module: 'appcompat'
+        exclude module: 'recyclerview'
+    }
 
     //view
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {

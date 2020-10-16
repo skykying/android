@@ -51,7 +51,7 @@ public abstract class MachineModule {
     @ActivityScope
     @Provides
     static RecyclerView.LayoutManager provideLayoutManager(MachineContract.View view) {
-        return new GridLayoutManager(view.getActivity(), 2);
+        return new GridLayoutManager(view.getActivity(), 1);
     }
 
     @ActivityScope

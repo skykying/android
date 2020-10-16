@@ -52,6 +52,7 @@ import timber.log.Timber;
  */
 @ActivityScope
 public class DeviceModel extends BaseModel implements DeviceContract.Model {
+    public static final int USERS_PER_PAGE = 10;
 
     @Inject
     public DeviceModel(IRepositoryManager repositoryManager) {
@@ -66,6 +67,21 @@ public class DeviceModel extends BaseModel implements DeviceContract.Model {
                 .getDevices())
                 .flatMap((Function<Observable<List<Device>>, ObservableSource<List<Device>>>) listObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
                         .getDevices(listObservable)
+                        .map(listReply -> listReply.getData()));
+
+    }
+
+
+    @Override
+    public Observable<List<Device>> getUpdateDevices(int lastIdQueried, boolean update) {
+        //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
+        return Observable.just(mRepositoryManager
+                .obtainRetrofitService(DeviceService.class)
+                .getUpdateDevices(lastIdQueried, USERS_PER_PAGE))
+                .flatMap((Function<Observable<List<Device>>, ObservableSource<List<Device>>>) listObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
+                        .getUpdateDevices(listObservable
+                                , new DynamicKey(lastIdQueried)
+                                , new EvictDynamicKey(update))
                         .map(listReply -> listReply.getData()));
 
     }

@@ -117,7 +117,7 @@ ext {
             "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
             "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
-
+            "materialdatetimepicker"   : "com.wdullaer:materialdatetimepicker:4.2.3",
 
     ]
 }

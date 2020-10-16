@@ -8,11 +8,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,10 +52,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     int lastSelectedPosition = 0;
 
     TextFragment fragment1;
-    TextFragment fragment2;
-    TextFragment fragment3;
-    TextFragment fragment4;
-    TextFragment fragment5;
     TextFragment fragment6;
     AppConfigsFragment fragment7;
     MachineFragment fragment8;
@@ -64,6 +62,8 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
 
     @Nullable
     ShapeBadgeItem shapeBadgeItem;
+
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +83,9 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         toggleBadge = findViewById(R.id.toggle_badge);
 
         message = findViewById(R.id.message);
+        layout = findViewById(R.id.header);
 
         fragment1 = TextFragment.newTextFragmentInstance(getString(R.string.para1));
-        fragment2 = TextFragment.newTextFragmentInstance(getString(R.string.para2));
-        fragment3 = TextFragment.newTextFragmentInstance(getString(R.string.para3));
-        fragment4 = TextFragment.newTextFragmentInstance(getString(R.string.para4));
-        fragment5 = TextFragment.newTextFragmentInstance(getString(R.string.para5));
         fragment6 = TextFragment.newTextFragmentInstance(getString(R.string.para6));
         fragment7 = AppConfigsFragment.newAppConfigsFragment("");
         fragment8 =  MachineFragment.newMachineFragment("");
@@ -125,14 +122,29 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
 
         bottomNavigationBar.setTabSelectedListener(this);
 
+        initView();
+    }
+
+    private void initView(){
         message.setVisibility(View.INVISIBLE);
-        modeSpinner.setVisibility(View.INVISIBLE);
-        bgSpinner.setVisibility(View.INVISIBLE);
-        shapeSpinner.setVisibility(View.INVISIBLE);
-        itemSpinner.setVisibility(View.INVISIBLE);
-        autoHide.setVisibility(View.INVISIBLE);
-        toggleHide.setVisibility(View.INVISIBLE);
-        toggleBadge.setVisibility(View.INVISIBLE);
+        message.setHeight(0);
+
+        layout.setVisibility(View.INVISIBLE);
+        ViewGroup.LayoutParams lp;
+        lp= layout.getLayoutParams();
+        lp.height=0;
+        layout.setLayoutParams(lp);
+    }
+
+    private void showHeader(){
+        message.setVisibility(View.VISIBLE);
+        message.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        layout.setVisibility(View.VISIBLE);
+        ViewGroup.LayoutParams lp;
+        lp= layout.getLayoutParams();
+        lp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
+        layout.setLayoutParams(lp);
     }
 
     @Override
@@ -259,6 +271,8 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     @Override
     public void onTabReselected(int position) {
         setMessageText(position + " Tab Reselected");
+        //refresh();
+        showHeader();
     }
 
     private void setMessageText(String messageText) {
@@ -277,15 +291,12 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
                 applyFragment(fragment1);
                 break;
             case 1:
-                 applyFragment(fragment8);
-//                startActivity(new Intent(this, MachineActivity.class));
+                applyFragment(fragment8);
                 break;
             case 2:
-                 applyFragment(fragment9);
-//                startActivity(new Intent(this, UserActivity.class));
+                applyFragment(fragment9);
                 break;
             case 3:
-//                startActivity(new Intent(this, SettingActivity.class));
                 applyFragment(fragment7);
                 break;
             case 4:

@@ -9,4 +9,13 @@
     <string name="title_activity_t_p">TPActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="deviceOps">Device</string>
+    <string name="opsFindLocalDevice">Local</string>
+    <string name="opsMore">More</string>
+    <string name="opsMessage">Message</string>
+    <string name="opsCloud">Cloud</string>
+    <string name="opsVms">Instance</string>
+    <string name="opsDatabase">Database</string>
+    <string name="opsMachine">Machine</string>
+    <string name="opsDevice">Device</string>
 </resources>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.yarolegovich.mp.MaterialPreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/preference_screen"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    tools:context=".setting.AppConfigsFragment">
 
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
@@ -75,4 +76,4 @@
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 
 
-</LinearLayout>
+</com.yarolegovich.mp.MaterialPreferenceScreen>

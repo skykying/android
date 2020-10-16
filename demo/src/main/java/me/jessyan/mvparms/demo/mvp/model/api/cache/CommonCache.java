@@ -43,6 +43,9 @@ public interface CommonCache {
     Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
+    Observable<Reply<List<Device>>> getUpdateDevices(Observable<List<Device>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+
+    @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
     Observable<Reply<List<Device>>> getDevices(Observable<List<Device>> devices);
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)

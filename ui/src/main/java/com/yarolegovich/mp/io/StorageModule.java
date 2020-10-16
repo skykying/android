@@ -5,9 +5,7 @@ import android.os.Bundle;
 
 import java.util.Set;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public interface StorageModule {
 
     void saveBoolean(String key, boolean value);

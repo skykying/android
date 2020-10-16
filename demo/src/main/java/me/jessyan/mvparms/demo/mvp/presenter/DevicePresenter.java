@@ -44,16 +44,6 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
-/**
- * ================================================
- * 展示 Presenter 的用法
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.4">Presenter wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 10:59
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
- */
 @ActivityScope
 public class DevicePresenter extends BasePresenter<DeviceContract.Model, DeviceContract.View> {
     @Inject
@@ -91,7 +81,8 @@ public class DevicePresenter extends BasePresenter<DeviceContract.Model, DeviceC
             @Override
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
-                requestFromModel(pullToRefresh);
+                //requestFromModel(pullToRefresh);
+                requestUpdateFromModel(pullToRefresh);
             }
 
             @Override
@@ -145,10 +136,6 @@ public class DevicePresenter extends BasePresenter<DeviceContract.Model, DeviceC
                     @Override
                     public void onNext(List<Device> devices) {
 
-                        for(Device d: devices){
-                            Log.e(TAG,">>>>>>>>>>>>>>"+d.getName());
-                            Log.e(TAG,">>>>>>>>>>>>>>"+d.getId());
-                        }
                         if (pullToRefresh) {
                             mDevices.clear();//如果是下拉刷新则清空列表
                         }
@@ -164,6 +151,57 @@ public class DevicePresenter extends BasePresenter<DeviceContract.Model, DeviceC
                 });
     }
 
+
+    private void requestUpdateFromModel(boolean pullToRefresh) {
+        if (pullToRefresh) {
+            lastUserId = 1;//下拉刷新默认只请求第一页
+        }
+
+        //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
+
+        boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次下拉刷新即需要最新数据,则不使用缓存
+
+        if (pullToRefresh && isFirst) {//默认在第一次下拉刷新时使用缓存
+            isFirst = false;
+            isEvictCache = false;
+        }
+
+        mModel.getUpdateDevices(lastUserId, isEvictCache)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
+                .doOnSubscribe(disposable -> {
+                    if (pullToRefresh) {
+                        mRootView.showLoading();//显示下拉刷新的进度条
+                    } else {
+                        mRootView.startLoadMore();//显示上拉加载更多的进度条
+                    }
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> {
+                    if (pullToRefresh) {
+                        mRootView.hideLoading();//隐藏下拉刷新的进度条
+                    } else {
+                        mRootView.endLoadMore();//隐藏上拉加载更多的进度条
+                    }
+                })
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .subscribe(new ErrorHandleSubscriber<List<Device>>(mErrorHandler) {
+                    @Override
+                    public void onNext(List<Device> devices) {
+                        lastUserId = devices.get(devices.size() - 1).getId();//记录最后一个id,用于下一次请求
+                        if (pullToRefresh) {
+                            mDevices.clear();//如果是下拉刷新则清空列表
+                        }
+                        preEndIndex = mDevices.size();//更新之前列表总长度,用于确定加载更多的起始位置
+                        mDevices.addAll(devices);
+                        if (pullToRefresh) {
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            mAdapter.notifyItemRangeInserted(preEndIndex, devices.size());
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onDestroy() {

@@ -9,22 +9,38 @@
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mpc_title="@string/appearance">
+        app:mpc_title="@string/opsCloud">
 
         <com.yarolegovich.mp.MaterialRightIconPreference
-            android:id="@+id/mfirst"
+            android:id="@+id/mdevice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mp_icon="@drawable/ic_local_atm_black_24dp"
             app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/donate" />
+            app:mp_title="@string/opsMessage" />
+
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_icon="@drawable/ic_star_border_black_24dp"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/opsDevice" />
+
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/donate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_icon="@drawable/ic_local_atm_black_24dp"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/opsMachine" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mpc_title="@string/appearance">
+        app:mpc_title="@string/opsVms">
 
         <com.yarolegovich.mp.MaterialChoicePreference
             android:layout_width="match_parent"
@@ -59,30 +75,16 @@
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mpc_title="@string/help_improve">
+        app:mpc_title="@string/opsDatabase">
 
-        <com.yarolegovich.mp.MaterialRightIconPreference
-            android:id="@+id/rate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_star_border_black_24dp"
-            app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/rate_the_lib" />
 
-        <com.yarolegovich.mp.MaterialRightIconPreference
-            android:id="@+id/donate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_local_atm_black_24dp"
-            app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/donate" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 
     <com.yarolegovich.mp.MaterialPreferenceCategory
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mpc_title="@string/help_improve">
+        app:mpc_title="@string/deviceOps">
 
         <com.yarolegovich.mp.MaterialRightIconPreference
             android:id="@+id/terminal"
@@ -90,7 +92,7 @@
             android:layout_height="wrap_content"
             app:mp_icon="@drawable/ic_star_border_black_24dp"
             app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/rate_the_lib" />
+            app:mp_title="@string/opsFindLocalDevice" />
 
         <com.yarolegovich.mp.MaterialRightIconPreference
             android:id="@+id/ufind"
@@ -98,7 +100,7 @@
             android:layout_height="wrap_content"
             app:mp_icon="@drawable/ic_local_atm_black_24dp"
             app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/donate" />
+            app:mp_title="@string/opsMore" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 

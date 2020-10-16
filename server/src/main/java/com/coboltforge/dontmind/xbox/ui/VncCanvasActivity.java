@@ -49,6 +49,7 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -75,10 +76,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class VncCanvasActivity extends VMBaseActivity {
 
-
+    //2340x1080
     static final long ZOOM_HIDE_DELAY_MS = 2500;
     private final static String TAG = "VncCanvasActivity";
 
@@ -105,6 +105,7 @@ public class VncCanvasActivity extends VMBaseActivity {
 
         // hide title bar, status bar
         setupWindowSize();
+        appToolbar(this);
 
         setContentView(R.layout.canvas);
 
@@ -131,7 +132,6 @@ public class VncCanvasActivity extends VMBaseActivity {
                 openOptionsMenu();
             }
         });
-
 
         /*
          * Setup connection bean.
@@ -401,7 +401,7 @@ public class VncCanvasActivity extends VMBaseActivity {
 
         for(int i = 0; i < menu.size(); i++){
             MenuItem mitem = menu.getItem(i);
-            mitem.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+            mitem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             Drawable drawable = mitem.getIcon();
             if(drawable != null) {
                 drawable.mutate();
@@ -762,7 +762,7 @@ public class VncCanvasActivity extends VMBaseActivity {
         // hide status bar everywhere
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        getWindow().addFlags(Window.FEATURE_OPTIONS_PANEL);
     }
 
     private void invalidateMyOptionsMenu() {

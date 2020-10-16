@@ -15,6 +15,7 @@ import com.jess.arms.utils.ArmsUtils;
 import com.yarolegovich.mp.MaterialPreferenceScreen;
 
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.mvp.ui.activity.DeviceActivity;
 import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 import me.jessyan.mvparms.demo.usbserial.DeviceListActivity;
@@ -40,6 +41,7 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.donate).setOnClickListener(this);
         view.findViewById(R.id.rate).setOnClickListener(this);
         view.findViewById(R.id.terminal).setOnClickListener(this);
+        view.findViewById(R.id.mdevice).setOnClickListener(this);
 
         return view;
     }
@@ -80,6 +82,9 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.terminal:
                 ArmsUtils.startActivity(DeviceListActivity.class);
+                break;
+            case R.id.mdevice:
+                ArmsUtils.startActivity(DeviceActivity.class);
                 break;
         }
     }

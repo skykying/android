@@ -32,20 +32,17 @@ import com.jess.arms.utils.ArmsUtils;
 import butterknife.BindView;
 import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.model.entity.Device;
+import me.jessyan.mvparms.demo.mvp.model.entity.User;
 
-/**
- * ================================================
- * 展示 {@link BaseHolder} 的用法
- * ================================================
- */
+
 public class DeviceItemHolder extends BaseHolder<Device> {
 
-    @BindView(R.id.iv_avatar)
+    @BindView(R.id.device_image)
     ImageView mAvatar;
-    @BindView(R.id.tv_name)
+    @BindView(R.id.device_name)
     TextView mName;
 
-    @BindView(R.id.tv_id)
+    @BindView(R.id.device_desc)
     TextView mID;
 
     private AppComponent mAppComponent;
@@ -61,18 +58,32 @@ public class DeviceItemHolder extends BaseHolder<Device> {
         mImageLoader = mAppComponent.imageLoader();
     }
 
-    @Override
-    public void setData(@NonNull Device data, int position) {
-        mName.setText(data.getName());
-        mID.setText(data.getId() + " admin=" + data.getAdminState() + " operate=" + data.getOperatingState());
-
-        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
+//    @Override
+//    public void setData(@NonNull Device data, int position) {
+//        mName.setText(data.getName());
+//        mID.setText(data.getId() + " admin=" + data.getAdminState() + " operate=" + data.getOperatingState());
+//
+//        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
 //        mImageLoader.loadImage(itemView.getContext(),
 //                ImageConfigImpl
 //                        .builder()
-//                        .url(data.getUrl())
+//                        .url(data.getAvatarUrl())
 //                        .imageView(mAvatar)
 //                        .build());
+//    }
+
+    @Override
+    public void setData(@NonNull Device data, int position) {
+        mName.setText(data.getLogin());
+        //mID.setText(data.getId());
+
+        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
+        mImageLoader.loadImage(itemView.getContext(),
+                ImageConfigImpl
+                        .builder()
+                        .url(data.getAvatarUrl())
+                        .imageView(mAvatar)
+                        .build());
     }
 
     /**
@@ -83,9 +94,9 @@ public class DeviceItemHolder extends BaseHolder<Device> {
     protected void onRelease() {
         //只要传入的 Context 为 Activity, Glide 就会自己做好生命周期的管理, 其实在上面的代码中传入的 Context 就是 Activity
         //所以在 onRelease 方法中不做 clear 也是可以的, 但是在这里想展示一下 clear 的用法
-//        mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
-//                .imageViews(mAvatar)
-//                .build());
+        mImageLoader.clear(mAppComponent.application(), ImageConfigImpl.builder()
+                .imageViews(mAvatar)
+                .build());
         this.mAvatar = null;
         this.mName = null;
         this.mAppComponent = null;

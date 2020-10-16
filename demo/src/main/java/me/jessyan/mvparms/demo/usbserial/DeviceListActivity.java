@@ -46,7 +46,7 @@ public class DeviceListActivity extends BaseToolbarActivity {
     private ProgressBar mProgressBar;
 
     private static final int MESSAGE_REFRESH = 101;
-    private static final long REFRESH_TIMEOUT_MILLIS = 5000;
+    private static final long REFRESH_TIMEOUT_MILLIS = 3000;
     public static final String INTENT_ACTION_GRANT_USB = BuildConfig.APPLICATION_ID + ".GRANT_USB";
 
     private final Handler mHandler = new Handler() {

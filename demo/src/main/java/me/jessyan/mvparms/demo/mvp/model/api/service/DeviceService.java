@@ -19,6 +19,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import me.jessyan.mvparms.demo.mvp.model.entity.Device;
+import me.jessyan.mvparms.demo.mvp.model.entity.Machine;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -31,4 +32,8 @@ public interface DeviceService {
     @Headers({HEADER_API_VERSION})
     @GET("/command/api/v1/device")
     Observable<List<Device>> getDevices();
+
+    @Headers({HEADER_API_VERSION})
+    @GET("/users")
+    Observable<List<Device>> getUpdateDevices(@Query("since") int lastIdQueried, @Query("per_page") int perPage);
 }

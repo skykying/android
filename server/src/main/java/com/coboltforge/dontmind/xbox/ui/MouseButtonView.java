@@ -59,14 +59,17 @@ public class MouseButtonView extends View {
                 && ((action_masked == MotionEvent.ACTION_MOVE)
                 || action_masked == MotionEvent.ACTION_POINTER_UP
                 || action_masked == MotionEvent.ACTION_POINTER_DOWN)) {
-            if (Utils.DEBUG())
+
+            if (Utils.DEBUG()){
                 Utils.inspectEvent(e);
+            }
 
             // calc button view origin
             final float origin_x = e.getRawX() - e.getX();
             final float origin_y = e.getRawY() - e.getY();
-            if (Utils.DEBUG())
+            if (Utils.DEBUG()){
                 Log.d(TAG, "Input: button " + buttonId + " origin: " + origin_x + "," + origin_y);
+            }
 
             switch (action_masked) {
                 case MotionEvent.ACTION_MOVE:
@@ -77,8 +80,9 @@ public class MouseButtonView extends View {
                         final float pointerTwoX = origin_x + e.getX(pointerTwoIndex);
                         final float pointerTwoY = origin_y + e.getY(pointerTwoIndex);
 
-                        if (Utils.DEBUG())
+                        if (Utils.DEBUG()){
                             Log.d(TAG, "Input: button " + buttonId + " second pointer ID:" + pointerTwoId + " idx:" + pointerTwoIndex + " pos: " + pointerTwoX + "," + pointerTwoY + " MOVE");
+                        }
 
                         // workaround for buggy touch screens, see below
                         if (drag_started) {

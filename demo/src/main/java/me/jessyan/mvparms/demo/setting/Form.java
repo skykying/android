@@ -5,9 +5,7 @@ import android.graphics.Color;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by yarolegovich on 15.05.2016.
- */
+
 public class Form {
 
     private int yearsOfExp;
