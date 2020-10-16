@@ -460,7 +460,7 @@ public class VncCanvas extends GLSurfaceView {
      *
      * @param evt            motion event; x and y must already have been converted from screen coordinates
      *                       to remote frame buffer coordinates.
-     * @param downEvent      True if "mouse button" (touch or trackball button) remoteInputStream down when this happens
+     * @param mouseIsDown      True if "mouse button" (touch or trackball button) remoteInputStream down when this happens
      * @param useRightButton If true, event remoteInputStream interpreted as happening with right mouse button
      * @return true if event was actually sent
      */

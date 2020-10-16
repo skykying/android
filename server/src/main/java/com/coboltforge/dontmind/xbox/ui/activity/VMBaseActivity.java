@@ -3,6 +3,8 @@ package com.coboltforge.dontmind.xbox.ui.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -53,4 +55,15 @@ public class VMBaseActivity extends AppCompatActivity {
         return super.onMenuOpened(featureId, menu);
     }
 
+    /**
+     * Sets window size according to target device's platform.
+     * Note that this MUST be called before adding content!
+     */
+    public void setupWindowSize(AppCompatActivity activity) {
+
+        // hide status bar everywhere
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        activity.getWindow().addFlags(Window.FEATURE_OPTIONS_PANEL);
+    }
 }

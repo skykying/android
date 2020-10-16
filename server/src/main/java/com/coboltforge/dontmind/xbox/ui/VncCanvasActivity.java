@@ -49,11 +49,9 @@ import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-
 
 import com.coboltforge.dontmind.xbox.color.COLORMODEL;
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
@@ -100,11 +98,10 @@ public class VncCanvasActivity extends VMBaseActivity {
     @SuppressLint("ShowToast")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         // hide title bar, status bar
-        setupWindowSize();
+        setupWindowSize(this);
         appToolbar(this);
 
         setContentView(R.layout.canvas);
@@ -113,9 +110,7 @@ public class VncCanvasActivity extends VMBaseActivity {
         zoomer = (ZoomControls) findViewById(R.id.zoomer);
 
         prefs = getSharedPreferences(Constants.PREFSNAME, MODE_PRIVATE);
-
         database = new VncDatabase(this);
-
         mClipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         inputHandler = new MightyInputHandler();
@@ -125,12 +120,9 @@ public class VncCanvasActivity extends VMBaseActivity {
          * setup floating action button
          */
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "FAB onClick");
-                openOptionsMenu();
-            }
+        fab.setOnClickListener(v->{
+            Log.d(TAG, "FAB onClick");
+            openOptionsMenu();
         });
 
         /*
@@ -180,10 +172,8 @@ public class VncCanvasActivity extends VMBaseActivity {
                     connection.setPassword(path.get(1));
                 }
             }
-        }
-        // Uri == null
-        else { // i.e. started from main menu
-
+        } else { // i.e. started from main menu
+            // Uri == null
             Bundle extras = i.getExtras();
 
             if (extras != null) {
@@ -207,62 +197,26 @@ public class VncCanvasActivity extends VMBaseActivity {
         vncCanvas.initializeVncCanvas(this, inputHandler, conn); // add conn to canvas
         conn.setCanvas(vncCanvas); // add canvas to conn. be sure to call this before init!
         // the actual connection init
-        conn.init(connection, new Runnable() {
-            public void run() {
-                setModes();
-            }
-        });
-
+        conn.init(connection, ()->{setModes();});
 
         zoomer.hide();
-        zoomer.setOnZoomInClickListener(new View.OnClickListener() {
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see android.view.View.OnClickListener#onClick(android.view.View)
-             */
-            @Override
-            public void onClick(View v) {
-                try {
-                    showZoomer(true);
-                    vncCanvas.scaling.zoomIn(VncCanvasActivity.this);
-                } catch (NullPointerException e) {
-                }
+        zoomer.setOnZoomInClickListener(v->{
+            try {
+                showZoomer(true);
+                vncCanvas.scaling.zoomIn(VncCanvasActivity.this);
+            } catch (NullPointerException e) {
             }
-
         });
-        zoomer.setOnZoomOutClickListener(new View.OnClickListener() {
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see android.view.View.OnClickListener#onClick(android.view.View)
-             */
-            @Override
-            public void onClick(View v) {
-                try {
-                    showZoomer(true);
-                    vncCanvas.scaling.zoomOut(VncCanvasActivity.this);
-                } catch (NullPointerException e) {
-                }
+        zoomer.setOnZoomOutClickListener(v->{
+            try {
+                showZoomer(true);
+                vncCanvas.scaling.zoomOut(VncCanvasActivity.this);
+            } catch (NullPointerException e) {
             }
-
         });
-        zoomer.setOnZoomKeyboardClickListener(new View.OnClickListener() {
-
-            /*
-             * (non-Javadoc)
-             *
-             * @see android.view.View.OnClickListener#onClick(android.view.View)
-             */
-            @Override
-            public void onClick(View v) {
-                toggleKeyboard();
-            }
-
+        zoomer.setOnZoomKeyboardClickListener(v->{
+            toggleKeyboard();
         });
-
         mousebuttons = (ViewGroup) findViewById(R.id.virtualmousebuttons);
         MouseButtonView mousebutton1 = (MouseButtonView) findViewById(R.id.mousebutton1);
         MouseButtonView mousebutton2 = (MouseButtonView) findViewById(R.id.mousebutton2);
@@ -287,7 +241,6 @@ public class VncCanvasActivity extends VMBaseActivity {
             vncCanvas.setPointerHighlight(false);
         }
 
-
         /*
          * ask whether to show help on first run
          */
@@ -308,8 +261,7 @@ public class VncCanvasActivity extends VMBaseActivity {
                             } catch (Exception e) {
                             }
                         }
-                    })
-                    .show();
+                    }).show();
         }
 
     }
@@ -336,8 +288,6 @@ public class VncCanvasActivity extends VMBaseActivity {
      */
     @Override
     protected Dialog onCreateDialog(int id) {
-
-
         // Default to meta key dialog
         return new MetaKeyDialog(this);
     }
@@ -505,7 +455,6 @@ public class VncCanvasActivity extends VMBaseActivity {
         }
 
         if (id == R.id.itemDisconnect) {
-
             new AlertDialog.Builder(this)
                     .setMessage(getString(R.string.disconnect_question))
                     .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
@@ -680,28 +629,23 @@ public class VncCanvasActivity extends VMBaseActivity {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setSingleChoiceItems(choices, currentSelection, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-                try {
-                    dialog.dismiss();
-                } catch (Exception e) {
-                }
-                COLORMODEL cm = COLORMODEL.values()[item];
-                vncCanvas.vncConn.setColorModel(cm);
-                connection.setColorModel(cm.nameString());
-                Toast.makeText(VncCanvasActivity.this,
-                        "Updating Color Model to " + cm.toString(),
-                        Toast.LENGTH_SHORT).show();
+        builder.setSingleChoiceItems(choices, currentSelection,(dialog,item)->{
+            try {
+                dialog.dismiss();
+            } catch (Exception e) {
             }
+            COLORMODEL cm = COLORMODEL.values()[item];
+            vncCanvas.vncConn.setColorModel(cm);
+            connection.setColorModel(cm.nameString());
+            Toast.makeText(VncCanvasActivity.this,
+                    "Updating Color Model to " + cm.toString(),
+                    Toast.LENGTH_SHORT).show();
         });
         AlertDialog dialog = builder.create();
-        dialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface arg0) {
-                Log.i(TAG, "Color Model Selector dismissed");
-                // Restore desktop repaints
-                vncCanvas.enableRepaints();
-            }
+        dialog.setOnDismissListener(arg0->{
+            Log.i(TAG, "Color Model Selector dismissed");
+            // Restore desktop repaints
+            vncCanvas.enableRepaints();
         });
         dialog.show();
     }
@@ -751,18 +695,6 @@ public class VncCanvasActivity extends VMBaseActivity {
         // show scale
         notificationToast.setText(getString(R.string.scale_msg) + " " + (int) (100 * vncCanvas.getScale()) + "%");
         notificationToast.show();
-    }
-
-    /**
-     * Sets window size according to target device's platform.
-     * Note that this MUST be called before adding content!
-     */
-    private void setupWindowSize() {
-
-        // hide status bar everywhere
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(Window.FEATURE_OPTIONS_PANEL);
     }
 
     private void invalidateMyOptionsMenu() {
@@ -1220,7 +1152,6 @@ public class VncCanvasActivity extends VMBaseActivity {
                 zoomer.hide();
             }
         }
-
     }
 
 }
