@@ -1063,8 +1063,9 @@ public class RfbProto {
      * @throws IOException
      */
     public synchronized void writePointerEvent(int x, int y, int modifiers, int pointerMask) throws IOException {
-        if (Utils.DEBUG())
+        if (Utils.DEBUG()){
             Log.d(TAG, "Input: writerPointerEvent: x:" + x + " y:" + y + " pointerMask:" + pointerMask);
+        }
 
         eventBufLen = 0;
         writeModifierKeyEvents(modifiers);
@@ -1079,7 +1080,6 @@ public class RfbProto {
         //
         // Always release all modifiers after an "up" event
         //
-
         if (pointerMask == 0) {
             writeModifierKeyEvents(0);
         }
@@ -1122,14 +1122,17 @@ public class RfbProto {
     //
     public synchronized void writeKeyEvent(int keySym, int metaState, boolean down) throws IOException {
         eventBufLen = 0;
-        if (down)
+        if (down){
             writeModifierKeyEvents(metaState);
-        if (keySym != 0)
+        }
+        if (keySym != 0){
             writeKeyEvent(keySym, down);
+        }
 
         // Always release all modifiers after an "up" event
-        if (!down)
+        if (!down){
             writeModifierKeyEvents(0);
+        }
 
         remoteOutputStream.write(eventBuf, 0, eventBufLen);
     }
@@ -1151,17 +1154,21 @@ public class RfbProto {
     }
 
     void writeModifierKeyEvents(int newModifiers) {
-        if ((newModifiers & VNCConn.CTRL_MASK) != (oldModifiers & VNCConn.CTRL_MASK))
+        if ((newModifiers & VNCConn.CTRL_MASK) != (oldModifiers & VNCConn.CTRL_MASK)){
             writeKeyEvent(0xffe3, (newModifiers & VNCConn.CTRL_MASK) != 0);
+        }
 
-        if ((newModifiers & VNCConn.SHIFT_MASK) != (oldModifiers & VNCConn.SHIFT_MASK))
+        if ((newModifiers & VNCConn.SHIFT_MASK) != (oldModifiers & VNCConn.SHIFT_MASK)){
             writeKeyEvent(0xffe1, (newModifiers & VNCConn.SHIFT_MASK) != 0);
+        }
 
-        if ((newModifiers & VNCConn.META_MASK) != (oldModifiers & VNCConn.META_MASK))
+        if ((newModifiers & VNCConn.META_MASK) != (oldModifiers & VNCConn.META_MASK)){
             writeKeyEvent(0xffe7, (newModifiers & VNCConn.META_MASK) != 0);
+        }
 
-        if ((newModifiers & VNCConn.ALT_MASK) != (oldModifiers & VNCConn.ALT_MASK))
+        if ((newModifiers & VNCConn.ALT_MASK) != (oldModifiers & VNCConn.ALT_MASK)){
             writeKeyEvent(0xffe9, (newModifiers & VNCConn.ALT_MASK) != 0);
+        }
 
         oldModifiers = newModifiers;
     }
@@ -1184,8 +1191,9 @@ public class RfbProto {
 
     public void stopTiming() {
         timing = false;
-        if (timeWaitedIn100us < timedKbits / 2)
+        if (timeWaitedIn100us < timedKbits / 2){
             timeWaitedIn100us = timedKbits / 2; // upper limit 20Mbit/s
+        }
     }
 
     public long kbitsPerSecond() {

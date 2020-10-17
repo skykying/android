@@ -36,20 +36,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Inflater;
 
 
-public class VNCConn {
+public class VNCConn extends BaseConn {
 
-    // Useful shortcuts for modifier masks.
-    public final static int CTRL_MASK = KeyEvent.META_SYM_ON;
-    public final static int SHIFT_MASK = KeyEvent.META_SHIFT_ON;
-    public final static int META_MASK = 0;
-    public final static int ALT_MASK = KeyEvent.META_ALT_ON;
-    public static final int MOUSE_BUTTON_NONE = 0;
-    public static final int MOUSE_BUTTON_LEFT = 1;
-    public static final int MOUSE_BUTTON_MIDDLE = 2;
-    public static final int MOUSE_BUTTON_RIGHT = 4;
-    public static final int MOUSE_BUTTON_SCROLL_UP = 8;
-    public static final int MOUSE_BUTTON_SCROLL_DOWN = 16;
+
     private final static String TAG = "VNCConn";
+
+
     private final Paint handleCopyRectPaint = new Paint();
     private VncCanvas canvas;
     private ServerToClientThread inputThread;
@@ -61,12 +53,12 @@ public class VNCConn {
     // Runtime control flags
     private boolean maintainConnection = true;
     private boolean framebufferUpdatesEnabled = true;
+
     // Internal bitmap data
     private AbstractBitmapData bitmapData;
     private Lock bitmapDataPixelsLock = new ReentrantLock();
-    // message queue for communicating with the output worker thread
-    private ConcurrentLinkedQueue<OutputEvent> outputEventQueue = new ConcurrentLinkedQueue<VNCConn.OutputEvent>();
-    private Paint handleRREPaint;
+
+
     // ZRLE encoder's data.
     private byte[] zrleBuf;
     private int[] zrleTilePixels;
@@ -93,47 +85,8 @@ public class VNCConn {
     private int hextile_bg, hextile_fg;
     private Paint handleHextileSubrectPaint = new Paint();
 
-
-    /*
-            to make a connection, call
-            Setup(), then
-            Listen() (optional), then
-            Init(), then
-            Shutdown, then
-            Cleanup()
-
-            NB: If Init() fails, you have to call Setup() again!
-
-            The semantic counterparts are:
-               Setup() <-> Cleanup()
-               Init()  <-> Shutdown()
-     */
-    private byte[] backgroundColorBuffer = new byte[4];
-    private Paint handleZRLERectPaint = new Paint();
-    private int[] handleZRLERectPalette = new int[128];
-    private byte[] handleZlibRectBuffer = new byte[128];
-    private byte[] readPixelsBuffer = new byte[128];
-    private byte[] handleRawRectBuffer = new byte[128];
-
-
     public VNCConn() {
-        handleRREPaint = new Paint();
-        handleRREPaint.setStyle(Style.FILL);
-
-        if (Utils.DEBUG()) Log.d(TAG, this + " constructed!");
-    }
-
-    protected void finalize() {
-        if (Utils.DEBUG()) Log.d(TAG, this + " finalized!");
-    }
-
-    boolean Setup() {
-
-        return true;
-    }
-
-    void Cleanup() {
-
+        super();
     }
 
     /**
@@ -237,8 +190,9 @@ public class VNCConn {
             canvas.panToMouse();
 
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     /**
@@ -548,8 +502,9 @@ public class VNCConn {
             preferredEncoding = RfbProto.EncodingZRLE;
         } else {
             // Auto encoder selection remoteInputStream not enabled.
-            if (autoSelectOnly)
+            if (autoSelectOnly){
                 return;
+            }
         }
 
         int[] encodings = new int[20];
@@ -1246,75 +1201,6 @@ public class VNCConn {
         }
     }
 
-    private class OutputEvent {
-
-        public FullFramebufferUpdateRequest ffur;
-        public FramebufferUpdateRequest fur;
-        public PointerEvent pointer;
-        public KeyboardEvent key;
-        public ClientCutText cuttext;
-
-        public OutputEvent(int x, int y, int modifiers, int pointerMask) {
-            pointer = new PointerEvent();
-            pointer.x = x;
-            pointer.y = y;
-            pointer.modifiers = modifiers;
-            pointer.mask = pointerMask;
-        }
-
-        public OutputEvent(int keyCode, int metaState, boolean down) {
-            key = new KeyboardEvent();
-            key.keyCode = keyCode;
-            key.metaState = metaState;
-            key.down = down;
-        }
-
-        public OutputEvent(boolean incremental) {
-            ffur = new FullFramebufferUpdateRequest();
-            ffur.incremental = incremental;
-        }
-
-        public OutputEvent(int x, int y, int w, int h, boolean incremental) {
-            fur = new FramebufferUpdateRequest();
-            fur.x = x;
-            fur.y = y;
-            fur.w = w;
-            fur.h = h;
-            fur.incremental = incremental;
-        }
-
-        public OutputEvent(String text) {
-            cuttext = new ClientCutText();
-            cuttext.text = text;
-        }
-
-        private class PointerEvent {
-            int x;
-            int y;
-            int mask;
-            int modifiers;
-        }
-
-        private class KeyboardEvent {
-            int keyCode;
-            int metaState;
-            boolean down;
-        }
-
-        private class FullFramebufferUpdateRequest {
-            boolean incremental;
-        }
-
-        private class FramebufferUpdateRequest {
-            int x, y, w, h;
-            boolean incremental;
-        }
-
-        private class ClientCutText {
-            String text;
-        }
-    }
-
     private class ServerToClientThread extends Thread {
 
         private ProgressDialog pd;
@@ -1325,8 +1211,7 @@ public class VNCConn {
             this.pd = pd;
             this.setModes = setModes;
         }
-
-
+        
         public void run() {
 
             if (Utils.DEBUG()) Log.d(TAG, "ServerToClientThread started!");
@@ -1355,8 +1240,9 @@ public class VNCConn {
                     canvas.handler.post(new Runnable() {
                         public void run() {
                             try {
-                                if (pd.isShowing())
+                                if (pd.isShowing()){
                                     pd.dismiss();
+                                }
                             } catch (Exception e) {
                                 //unused
                             }
@@ -1504,8 +1390,10 @@ public class VNCConn {
             boolean useFull = false;
             int capacity = Utils.getActivityManager(canvas.getContext()).getMemoryClass();
             if (connSettings.getForceFull() == BitmapImplHint.AUTO) {
-                if (rfb.framebufferWidth * rfb.framebufferHeight * FullBufferBitmapData.CAPACITY_MULTIPLIER <= capacity * 1024 * 1024)
+                int cap = rfb.framebufferWidth * rfb.framebufferHeight * FullBufferBitmapData.CAPACITY_MULTIPLIER;
+                if (cap <= capacity * 1024 * 1024) {
                     useFull = true;
+                }
             } else{
                 useFull = (connSettings.getForceFull() == BitmapImplHint.FULL);
             }
@@ -1765,24 +1653,31 @@ public class VNCConn {
                 // check input queue
                 OutputEvent ev;
                 while ((ev = outputEventQueue.poll()) != null) {
-                    if (ev.pointer != null)
+                    if (ev.pointer != null) {
                         sendPointerEvent(ev.pointer);
-                    if (ev.key != null)
+                    }
+                    if (ev.key != null) {
                         sendKeyEvent(ev.key);
-                    if (ev.ffur != null)
+                    }
+                    if (ev.ffur != null) {
                         try {
                             bitmapData.writeFullUpdateRequest(ev.ffur.incremental);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    if (ev.fur != null)
+                    }
+
+                    if (ev.fur != null) {
                         try {
                             rfb.writeFramebufferUpdateRequest(ev.fur.x, ev.fur.y, ev.fur.w, ev.fur.h, ev.fur.incremental);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    if (ev.cuttext != null)
+                    }
+
+                    if (ev.cuttext != null){
                         sendCutText(ev.cuttext.text);
+                    }
                 }
 
                 // at this point, queue remoteInputStream empty, wait for input instead of hogging CPU
@@ -1797,7 +1692,6 @@ public class VNCConn {
             }
 
             if (Utils.DEBUG()) Log.d(TAG, "ClientToServerThread done!");
-
         }
 
 
@@ -1817,7 +1711,6 @@ public class VNCConn {
             } catch (NullPointerException e) {
             }
             return false;
-
         }
 
 
@@ -1825,8 +1718,9 @@ public class VNCConn {
             if (rfb != null && rfb.inNormalProtocol) {
 
                 try {
-                    if (Utils.DEBUG())
+                    if (Utils.DEBUG()){
                         Log.d(TAG, "sending key " + evt.keyCode + (evt.down ? " down" : " up"));
+                    }
                     rfb.writeKeyEvent(evt.keyCode, evt.metaState, evt.down);
                     return true;
                 } catch (Exception e) {
@@ -1850,7 +1744,6 @@ public class VNCConn {
             }
             return false;
         }
-
 
     }
 
