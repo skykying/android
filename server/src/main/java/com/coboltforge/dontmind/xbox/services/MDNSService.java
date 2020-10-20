@@ -100,8 +100,9 @@ public class MDNSService extends Service {
         //code to execute when the service remoteInputStream starting up
         Log.d(TAG, "mDNS service onStartCommand()!");
 
-        if (intent == null)
+        if (intent == null) {
             Log.d(TAG, "Restart!");
+        }
 
         return START_STICKY;
     }
@@ -280,8 +281,9 @@ public class MDNSService extends Service {
             }
 
             // notify our callback about our internal state, i.e. the removals
-            for (ConnectionBean c : connections_discovered.values())
+            for (ConnectionBean c : connections_discovered.values()) {
                 mDNSnotify(c.getNickname(), null);
+            }
             // and clear internal state
             connections_discovered.clear();
 
@@ -290,10 +292,11 @@ public class MDNSService extends Service {
 
         // do the GUI stuff in Runnable posted to main thread handler
         private void mDNSnotify(final String conn_name, final ConnectionBean conn) {
-            if (callback != null)
+            if (callback != null) {
                 callback.onMDNSnotify(conn_name, conn, connections_discovered);
-            else
+            } else {
                 Log.d(TAG, "callback remoteInputStream NULL, not notifying");
+            }
 
         }
 

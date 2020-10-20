@@ -86,8 +86,9 @@ public class ConnectionListActivity extends ListActivity {
             intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
 
             setResult(RESULT_OK, intent);
-        } else
+        } else {
             setResult(RESULT_CANCELED);
+        }
 
         finish();
     }

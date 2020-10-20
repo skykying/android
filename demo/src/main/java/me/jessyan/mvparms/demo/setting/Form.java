@@ -3,10 +3,15 @@ package me.jessyan.mvparms.demo.setting;
 import android.graphics.Color;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-public class Form {
+
+public class Form  {
 
     private int yearsOfExp;
     private int favoriteColor;

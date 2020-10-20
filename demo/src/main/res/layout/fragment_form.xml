@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yarolegovich.mp.MaterialPreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/preference_screen"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <com.yarolegovich.mp.MaterialPreferenceCategory
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mpc_title="@string/experience">
+
+            <com.yarolegovich.mp.MaterialMultiChoicePreference
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_entry_values="@array/technologies"
+                app:mp_key="@string/pkey_techs"
+                app:mp_show_value="onBottom"
+                app:mp_title="@string/techs_you_know" />
+
+            <com.yarolegovich.mp.MaterialSeekBarPreference
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_default_value="2"
+                app:mp_key="@string/pkey_experience"
+                app:mp_max_val="10"
+                app:mp_min_val="1"
+                app:mp_show_val="true"
+                app:mp_title="@string/years_of_exp" />
+
+        </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+        <com.yarolegovich.mp.MaterialPreferenceCategory
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mpc_title="@string/personal">
+
+            <com.yarolegovich.mp.MaterialColorPreference
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="@string/pkey_color"
+                app:mp_title="@string/fav_color" />
+
+            <com.yarolegovich.mp.MaterialCheckboxPreference
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mp_key="@string/pkey_adequate"
+                app:mp_title="@string/adequate" />
+
+        </com.yarolegovich.mp.MaterialPreferenceCategory>
+
+    </com.yarolegovich.mp.MaterialPreferenceScreen>

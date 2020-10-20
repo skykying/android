@@ -18,4 +18,5 @@
     <string name="opsDatabase">Database</string>
     <string name="opsMachine">Machine</string>
     <string name="opsDevice">Device</string>
+    <string name="opsHistory">History</string>
 </resources>

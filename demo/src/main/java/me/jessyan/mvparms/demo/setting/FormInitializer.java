@@ -61,6 +61,7 @@ public class FormInitializer implements StorageModule {
     @Override
     public int getInt(String key, int defaultVal) {
         Log.i(TAG,"getInt");
+
         if (key.equals(Prefs.keys().KEY_FAV_COLOR)) {
             return form.getFavoriteColor();
         } else if (key.equals(Prefs.keys().KEY_YEARS_OF_EXP)) {

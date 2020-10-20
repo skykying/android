@@ -1,22 +1,13 @@
 package me.jessyan.mvparms.demo.ui;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -27,35 +18,25 @@ import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 
 import me.jessyan.mvparms.demo.R;
-
 import me.jessyan.mvparms.demo.setting.AppConfigsFragment;
+import me.jessyan.mvparms.demo.setting.FillTheFormFragment;
+import me.jessyan.mvparms.demo.ui.fragment.HomeFragment;
 import me.jessyan.mvparms.demo.ui.fragment.MachineFragment;
 import me.jessyan.mvparms.demo.ui.fragment.MessageFragment;
 
 
-public class HomeActivity extends BaseToolbarActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
+public class HomeActivity extends HomeUtils implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, BottomNavigationBar.OnTabSelectedListener, AdapterView.OnItemSelectedListener {
 
     BottomNavigationBar bottomNavigationBar;
 
-    Spinner modeSpinner;
-    Spinner shapeSpinner;
-    Spinner itemSpinner;
-    Spinner bgSpinner;
-    CheckBox autoHide;
-
-    Button toggleHide;
-    Button toggleBadge;
-
-    TextView message;
-    TextView scrollableText;
-
     int lastSelectedPosition = 0;
 
-    TextFragment fragment1;
-    TextFragment fragment6;
-    AppConfigsFragment fragment7;
-    MachineFragment fragment8;
-    MessageFragment fragment9;
+    TextFragment textFragment;
+    AppConfigsFragment appConfigsFragment;
+    MachineFragment machineFragment;
+    MessageFragment messageFragment;
+    HomeFragment homeFragment;
+    FillTheFormFragment fillTheFormFragment;
 
     @Nullable
     TextBadgeItem numberBadgeItem;
@@ -63,7 +44,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     @Nullable
     ShapeBadgeItem shapeBadgeItem;
 
-    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,43 +53,15 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         appToolbar(this);
         bottomNavigationBar = findViewById(R.id.bottom_navigation_bar);
 
-        modeSpinner = findViewById(R.id.mode_spinner);
-        bgSpinner = findViewById(R.id.bg_spinner);
-        shapeSpinner = findViewById(R.id.shape_spinner);
-        itemSpinner = findViewById(R.id.item_spinner);
-        autoHide = findViewById(R.id.auto_hide);
+        appHomeSettings(this);
+        initView();
 
-        toggleHide = findViewById(R.id.toggle_hide);
-        toggleBadge = findViewById(R.id.toggle_badge);
-
-        message = findViewById(R.id.message);
-        layout = findViewById(R.id.header);
-
-        fragment1 = TextFragment.newTextFragmentInstance(getString(R.string.para1));
-        fragment6 = TextFragment.newTextFragmentInstance(getString(R.string.para6));
-        fragment7 = AppConfigsFragment.newAppConfigsFragment("");
-        fragment8 =  MachineFragment.newMachineFragment("");
-        fragment9 =  MessageFragment.newMessageFragment("");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"MODE_DEFAULT", "MODE_FIXED", "MODE_SHIFTING", "MODE_FIXED_NO_TITLE", "MODE_SHIFTING_NO_TITLE"});
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        modeSpinner.setAdapter(adapter);
-        modeSpinner.setSelection(1);
-
-        ArrayAdapter<String> itemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"3 items", "4 items", "5 items"});
-        itemAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        itemSpinner.setAdapter(itemAdapter);
-        itemSpinner.setSelection(1);
-
-        ArrayAdapter<String> shapeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"SHAPE_OVAL", "SHAPE_RECTANGLE", "SHAPE_HEART", "SHAPE_STAR_3_VERTICES", "SHAPE_STAR_4_VERTICES", "SHAPE_STAR_5_VERTICES", "SHAPE_STAR_6_VERTICES"});
-        shapeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        shapeSpinner.setAdapter(shapeAdapter);
-        shapeSpinner.setSelection(0);
-
-        ArrayAdapter<String> bgAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"BACKGROUND_STYLE_DEFAULT", "BACKGROUND_STYLE_STATIC", "BACKGROUND_STYLE_RIPPLE"});
-        bgAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        bgSpinner.setAdapter(bgAdapter);
-        bgSpinner.setSelection(1);
+        homeFragment = HomeFragment.newHomeFragmentInstance(getString(R.string.para1));
+        textFragment = TextFragment.newTextFragmentInstance(getString(R.string.para6));
+        appConfigsFragment = AppConfigsFragment.newAppConfigsFragment("");
+        machineFragment =  MachineFragment.newMachineFragment("");
+        messageFragment =  MessageFragment.newMessageFragment("");
+        fillTheFormFragment = FillTheFormFragment.newFillTheFormFragment("");
 
         modeSpinner.setOnItemSelectedListener(this);
         bgSpinner.setOnItemSelectedListener(this);
@@ -121,30 +73,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         toggleBadge.setOnClickListener(this);
 
         bottomNavigationBar.setTabSelectedListener(this);
-
-        initView();
-    }
-
-    private void initView(){
-        message.setVisibility(View.INVISIBLE);
-        message.setHeight(0);
-
-        layout.setVisibility(View.INVISIBLE);
-        ViewGroup.LayoutParams lp;
-        lp= layout.getLayoutParams();
-        lp.height=0;
-        layout.setLayoutParams(lp);
-    }
-
-    private void showHeader(){
-        message.setVisibility(View.VISIBLE);
-        message.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        layout.setVisibility(View.VISIBLE);
-        ViewGroup.LayoutParams lp;
-        lp= layout.getLayoutParams();
-        lp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
-        layout.setLayoutParams(lp);
     }
 
     @Override
@@ -158,10 +86,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_github:
-                String url = "https://github.com/Ashok-Varma/BottomNavigation";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -222,7 +146,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
         bottomNavigationBar.setMode(modeSpinner.getSelectedItemPosition());
         bottomNavigationBar.setBackgroundStyle(bgSpinner.getSelectedItemPosition());
 
-
         switch (itemSpinner.getSelectedItemPosition()) {
             case 0:
                 bottomNavigationBar
@@ -271,7 +194,6 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     @Override
     public void onTabReselected(int position) {
         setMessageText(position + " Tab Reselected");
-        //refresh();
         showHeader();
     }
 
@@ -288,22 +210,22 @@ public class HomeActivity extends BaseToolbarActivity implements View.OnClickLis
     private void setScrollableText(int position) {
         switch (position) {
             case 0:
-                applyFragment(fragment1);
+                applyFragment(homeFragment);
                 break;
             case 1:
-                applyFragment(fragment8);
+                applyFragment(machineFragment);
                 break;
             case 2:
-                applyFragment(fragment9);
+                applyFragment(messageFragment);
                 break;
             case 3:
-                applyFragment(fragment7);
+                applyFragment(fillTheFormFragment);
                 break;
             case 4:
-                applyFragment(fragment7);
+                applyFragment(appConfigsFragment);
                 break;
             default:
-                applyFragment(fragment6);
+                applyFragment(textFragment);
         }
     }
 }

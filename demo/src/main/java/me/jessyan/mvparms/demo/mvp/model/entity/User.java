@@ -17,6 +17,8 @@ package me.jessyan.mvparms.demo.mvp.model.entity;
 
 import org.jetbrains.annotations.NotNull;
 
+import io.realm.RealmObject;
+
 /**
  * ================================================
  * User 实体类

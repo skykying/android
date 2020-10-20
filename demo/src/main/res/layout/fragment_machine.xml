@@ -15,7 +15,7 @@
             android:id="@+id/mdevice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_local_atm_black_24dp"
+            app:mp_icon="@android:drawable/arrow_down_float"
             app:mp_icon_tint="@color/textSecondary"
             app:mp_title="@string/opsMessage" />
 
@@ -23,15 +23,16 @@
             android:id="@+id/rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_star_border_black_24dp"
+            app:mp_icon="@android:drawable/arrow_down_float"
             app:mp_icon_tint="@color/textSecondary"
             app:mp_title="@string/opsDevice" />
 
         <com.yarolegovich.mp.MaterialRightIconPreference
+            android:layout_margin="1dp"
             android:id="@+id/donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_icon="@drawable/ic_local_atm_black_24dp"
+            app:mp_icon="@android:drawable/arrow_down_float"
             app:mp_icon_tint="@color/textSecondary"
             app:mp_title="@string/opsMachine" />
 
@@ -77,7 +78,13 @@
         android:layout_height="wrap_content"
         app:mpc_title="@string/opsDatabase">
 
-
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mp_icon="@android:drawable/arrow_down_float"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/opsHistory" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 

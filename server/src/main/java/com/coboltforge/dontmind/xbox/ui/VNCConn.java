@@ -1202,16 +1202,14 @@ public class VNCConn extends BaseConn {
     }
 
     private class ServerToClientThread extends Thread {
-
         private ProgressDialog pd;
         private Runnable setModes;
-
 
         public ServerToClientThread(ProgressDialog pd, Runnable setModes) {
             this.pd = pd;
             this.setModes = setModes;
         }
-        
+
         public void run() {
 
             if (Utils.DEBUG()) Log.d(TAG, "ServerToClientThread started!");

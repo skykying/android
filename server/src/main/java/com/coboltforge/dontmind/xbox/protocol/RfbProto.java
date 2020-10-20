@@ -301,8 +301,9 @@ public class RfbProto {
     } */
         //+
         sock = new Socket(host, port);
-        remoteInputStream = new DataInputStream(new BufferedInputStream(sock.getInputStream(),
-                16384));
+
+        BufferedInputStream bis = new BufferedInputStream(sock.getInputStream(), 16384);
+        remoteInputStream = new DataInputStream(bis);
         remoteOutputStream = sock.getOutputStream();
 
         timing = false;
@@ -350,8 +351,7 @@ public class RfbProto {
                 || (b[8] < '0') || (b[8] > '9') || (b[9] < '0') || (b[9] > '9')
                 || (b[10] < '0') || (b[10] > '9') || (b[11] != '\n')) {
             Log.i(TAG, new String(b));
-            throw new Exception("Host " + host + " port " + port +
-                    " remoteInputStream not an RFB server");
+            throw new Exception("Host " + host + " port " + port + " remoteInputStream not an RFB server");
         }
 
         serverMajor = (b[4] - '0') * 100 + (b[5] - '0') * 10 + (b[6] - '0');
@@ -386,8 +386,7 @@ public class RfbProto {
     //
 
     public int negotiateSecurity(int bitPref) throws Exception {
-        return (clientMinor >= 7) ?
-                selectSecurityType(bitPref) : readSecurityType(bitPref);
+        return (clientMinor >= 7) ? selectSecurityType(bitPref) : readSecurityType(bitPref);
     }
 
     //
@@ -457,8 +456,9 @@ public class RfbProto {
     //
 
     public void authenticateNone() throws Exception {
-        if (clientMinor >= 8)
+        if (clientMinor >= 8) {
             readSecurityResult("No authentication");
+        }
     }
 
 
@@ -685,7 +685,6 @@ public class RfbProto {
     //
     // Read a FramebufferUpdate message
     //
-
     public int negotiateAuthenticationTight() throws Exception {
         int nAuthTypes = remoteInputStream.readInt();
         if (nAuthTypes == 0)
@@ -946,12 +945,16 @@ public class RfbProto {
             throws IOException {
         framebufferUpdateRequest[0] = (byte) FramebufferUpdateRequest;
         framebufferUpdateRequest[1] = (byte) (incremental ? 1 : 0);
+
         framebufferUpdateRequest[2] = (byte) ((x >> 8) & 0xff);
         framebufferUpdateRequest[3] = (byte) (x & 0xff);
+
         framebufferUpdateRequest[4] = (byte) ((y >> 8) & 0xff);
         framebufferUpdateRequest[5] = (byte) (y & 0xff);
+
         framebufferUpdateRequest[6] = (byte) ((w >> 8) & 0xff);
         framebufferUpdateRequest[7] = (byte) (w & 0xff);
+        
         framebufferUpdateRequest[8] = (byte) ((h >> 8) & 0xff);
         framebufferUpdateRequest[9] = (byte) (h & 0xff);
 
