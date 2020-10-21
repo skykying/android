@@ -6,38 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.yarolegovich.mp.MaterialPreferenceCategory
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mpc_title="@string/performance">
-
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_default_value="24 hours"
-            app:mp_entry_values="@array/update_intervals"
-            app:mp_key="@string/pkey_update_interval"
-            app:mp_show_value="onRight"
-            app:mp_title="@string/update_interval" />
-
-        <com.yarolegovich.mp.MaterialSwitchPreference
-            android:id="@+id/pref_auto_loc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_default_value="true"
-            app:mp_key="@string/pkey_auto_location"
-            app:mp_title="@string/auto_location" />
-
-        <com.yarolegovich.mp.MaterialEditTextPreference
-            android:id="@+id/pref_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_default_value="@string/pdef_location"
-            app:mp_key="@string/pkey_location"
-            app:mp_show_value="onRight"
-            app:mp_title="@string/location" />
-
-    </com.yarolegovich.mp.MaterialPreferenceCategory>
 
 
     <com.yarolegovich.mp.MaterialPreferenceCategory

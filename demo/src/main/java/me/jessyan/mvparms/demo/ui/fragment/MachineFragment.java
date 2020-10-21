@@ -81,11 +81,24 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
                 ArmsUtils.startActivity(UserActivity.class);
                 break;
             case R.id.terminal:
-                ArmsUtils.startActivity(DeviceListActivity.class);
+                Intent intent = new Intent(getActivity(),DeviceListActivity.class);
+                //用一种特殊方式开启Activity
+                startActivityForResult(intent, 11);
+                //ArmsUtils.startActivity(DeviceListActivity.class);
                 break;
             case R.id.mdevice:
                 ArmsUtils.startActivity(DeviceActivity.class);
                 break;
         }
     }
+
+
+//设置数据
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String str = data.getStringExtra("data");
+        //tvOne.setText(str);
+    }
+
 }

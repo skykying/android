@@ -2,6 +2,8 @@ package me.jessyan.mvparms.demo.db;
 
 import android.content.Context;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import io.realm.Realm;
@@ -11,15 +13,10 @@ import io.realm.RealmResults;
 
 
 //https://blog.csdn.net/qq_31433525/article/details/79067266
-public class dbRealm {
-
-    public void initDB(Context context) {
-        Realm.init(context);
-        RealmConfiguration configuration = new RealmConfiguration.Builder().name("test.realm").build();
-        Realm.setDefaultConfiguration(configuration);
-    }
+public class RealmManager {
 
     public void add(Realm realm){
+
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -41,7 +38,6 @@ public class dbRealm {
             }
         });
     }
-
 
     public void add2(Realm realm){
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -90,5 +86,21 @@ public class dbRealm {
                 }
             }
         });
+    }
+
+    public  List<dbDog> getAll(Realm realm){
+        List<dbDog> list = new LinkedList<dbDog>();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                //先查询后更改
+                RealmResults<dbDog> result = realm.where(dbDog.class).findAll();
+                for(dbDog ddog : result){
+                    list.add(ddog);
+                }
+            }
+        });
+
+        return list;
     }
 }

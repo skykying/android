@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,21 +19,31 @@ import androidx.fragment.app.Fragment;
 
 import com.yarolegovich.mp.MaterialPreferenceScreen;
 
+import java.util.List;
+
+import io.realm.Realm;
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.app.DemoApplication;
+import me.jessyan.mvparms.demo.db.RealmManager;
+import me.jessyan.mvparms.demo.db.dbDog;
 import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 
 
 public class FillTheFormFragment extends Fragment {
-    private String msg = null;
+
+    private String TAG = FillTheFormFragment.class.getSimpleName();
+
+    private String msg = "null";
     public static String KEY_MESSAGE = "message";
+
     private Form form = new Form();
+    private Realm realm;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         msg = getArguments().getString(KEY_MESSAGE);
     }
-
 
     @Nullable
     @Override
@@ -41,9 +52,17 @@ public class FillTheFormFragment extends Fragment {
         MaterialPreferenceScreen screen = (MaterialPreferenceScreen)view.findViewById(R.id.preference_screen);
         //screen.setVisibilityController(R.id.pref_auto_loc, Collections.singletonList(R.id.pref_location), false);
 
+        realm = DemoApplication.getRealmInstance();
         FormInitializer formInitializer = new FormInitializer(form);
         formInitializer.onRestoreInstanceState(savedInstanceState);
         screen.setStorageModule(formInitializer);
+
+        RealmManager realmManager = new RealmManager();
+        realmManager.add(realm);
+        List<dbDog> dogs = realmManager.getAll(realm);
+        for(dbDog dog : dogs) {
+            Log.e(TAG, "" + dog.toString());
+        }
 
         return view;
     }

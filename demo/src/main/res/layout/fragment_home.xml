@@ -10,6 +10,12 @@
 
     <include layout="@layout/include_cardview"/>
 
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
     <Spinner
         android:id="@+id/mode_spinner"
         android:layout_width="wrap_content"
@@ -25,7 +31,6 @@
         android:orientation="horizontal" />
 
     <LinearLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -76,6 +81,8 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/auto_hide_badge" />
 
+    </LinearLayout>
+
     <include layout="@layout/include_hnty_alter"/>
     <include layout="@layout/include_hnty_cloud"/>
     <include layout="@layout/include_hnty_device"/>
@@ -90,7 +97,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:textSize="16sp" />
-
 
 </LinearLayout>
 

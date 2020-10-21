@@ -60,6 +60,7 @@ dependencies {
     implementation rootProject.ext.dependencies["androideventbus"]
     implementation rootProject.ext.dependencies["coordinatorlayout"]
     implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["xlifecycle"]
 //    implementation rootProject.ext.dependencies["eventbus"]
 
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]

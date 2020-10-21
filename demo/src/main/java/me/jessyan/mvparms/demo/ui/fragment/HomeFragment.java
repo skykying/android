@@ -36,23 +36,26 @@ public class HomeFragment extends Fragment {
     protected void hideView(){
         //message.setVisibility(View.INVISIBLE);
         //message.setHeight(0);
-
-        layout.setVisibility(View.INVISIBLE);
-        ViewGroup.LayoutParams lp;
-        lp= layout.getLayoutParams();
-        lp.height=0;
-        layout.setLayoutParams(lp);
+        if(layout != null) {
+            layout.setVisibility(View.INVISIBLE);
+            ViewGroup.LayoutParams lp;
+            lp = layout.getLayoutParams();
+            lp.height = 0;
+            layout.setLayoutParams(lp);
+        }
     }
 
     protected void showHeader(){
         //message.setVisibility(View.VISIBLE);
         //message.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        layout.setVisibility(View.VISIBLE);
-        ViewGroup.LayoutParams lp;
-        lp= layout.getLayoutParams();
-        lp.height=ViewGroup.LayoutParams.WRAP_CONTENT;
-        layout.setLayoutParams(lp);
+        if(layout != null) {
+            layout.setVisibility(View.VISIBLE);
+            ViewGroup.LayoutParams lp;
+            lp = layout.getLayoutParams();
+            lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            layout.setLayoutParams(lp);
+        }
     }
 
 
@@ -79,7 +82,6 @@ public class HomeFragment extends Fragment {
         
         return view;
     }
-
 
     public static HomeFragment newHomeFragmentInstance(String message) {
         HomeFragment textFragment = new HomeFragment();

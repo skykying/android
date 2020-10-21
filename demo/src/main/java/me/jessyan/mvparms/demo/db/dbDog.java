@@ -30,4 +30,13 @@ public class dbDog extends RealmObject {
     public void setFale(boolean fale) {
         isFale = fale;
     }
+
+    @Override
+    public String toString() {
+        return "dbDog{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", isFale=" + isFale +
+                '}';
+    }
 }

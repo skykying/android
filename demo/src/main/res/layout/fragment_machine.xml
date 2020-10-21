@@ -43,33 +43,13 @@
         android:layout_height="wrap_content"
         app:mpc_title="@string/opsVms">
 
-        <com.yarolegovich.mp.MaterialChoicePreference
+        <com.yarolegovich.mp.MaterialRightIconPreference
+            android:id="@+id/terminal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mp_default_value="@string/pdef_temp_units"
-            app:mp_entry_values="@array/temperature_units"
-            app:mp_key="@string/pkey_temperature"
-            app:mp_show_value="onRight"
-            app:mp_title="@string/temp_units" />
-
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_default_value="Tue, Apr 20"
-            app:mp_entry_values="@array/date_formats"
-            app:mp_key="@string/pkey_date_format"
-            app:mp_show_value="onRight"
-            app:mp_title="@string/date_format" />
-
-        <com.yarolegovich.mp.MaterialChoicePreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:mp_default_value="HH:mm"
-            app:mp_entry_descriptions="@array/time_format_descriptions"
-            app:mp_entry_values="@array/time_formats"
-            app:mp_key="@string/pkey_time_format"
-            app:mp_show_value="onRight"
-            app:mp_title="@string/time_format" />
+            app:mp_icon="@drawable/ic_star_border_black_24dp"
+            app:mp_icon_tint="@color/textSecondary"
+            app:mp_title="@string/opsFindLocalDevice" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 

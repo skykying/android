@@ -194,7 +194,7 @@ public class HomeActivity extends HomeUtils implements View.OnClickListener, Com
     @Override
     public void onTabReselected(int position) {
         setMessageText(position + " Tab Reselected");
-        showHeader();
+        //showHeader();
     }
 
     private void setMessageText(String messageText) {

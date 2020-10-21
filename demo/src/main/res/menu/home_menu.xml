@@ -5,6 +5,6 @@
     <item
         android:id="@+id/menu_github"
         android:title="@string/github_link"
-        android:icon="@drawable/ic_github_circle_white_24dp"
+        android:icon="@drawable/ic_location_on_white_24dp"
         app:showAsAction="ifRoom" />
 </menu>

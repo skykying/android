@@ -1,6 +1,7 @@
 package com.coboltforge.dontmind.xbox.protocol;
 
 import com.coboltforge.dontmind.xbox.db.ConnectionBean;
+import com.coboltforge.dontmind.xbox.db.ConnectionContext;
 
 import java.util.Hashtable;
 
