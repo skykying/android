@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
+import com.coboltforge.xbox.ui.VMMainActivity;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.AppManager;

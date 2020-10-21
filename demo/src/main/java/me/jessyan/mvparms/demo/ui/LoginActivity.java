@@ -12,11 +12,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.coboltforge.dontmind.xbox.ui.VMMainActivity;
+import com.coboltforge.xbox.ui.VMMainActivity;
 
 
 import me.jessyan.mvparms.demo.R;
-import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

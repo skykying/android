@@ -17,18 +17,18 @@
 
 	</LinearLayout>
 
-	<com.coboltforge.dontmind.xbox.ui.VncCanvas
+	<com.coboltforge.xbox.ui.VncCanvas
     	android:id="@+id/vnc_canvas"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
     	android:layout_gravity="bottom|center"
 		android:focusableInTouchMode="true"
     	>
-	</com.coboltforge.dontmind.xbox.ui.VncCanvas>
+	</com.coboltforge.xbox.ui.VncCanvas>
 
 
 
-	<com.coboltforge.dontmind.xbox.ui.view.TouchPointView
+	<com.coboltforge.xbox.ui.view.TouchPointView
     	android:id="@+id/touchpoints"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent"
@@ -36,7 +36,7 @@
     	android:visibility="gone"
     />
 
-	<com.coboltforge.dontmind.xbox.ui.control.ZoomControls
+	<com.coboltforge.xbox.ui.control.ZoomControls
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/zoomer"
@@ -49,21 +49,21 @@
 	      android:layout_width="fill_parent"
 		  android:layout_gravity="center_vertical"
 	      android:layout_height="200dip">
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	      <com.coboltforge.xbox.ui.MouseButtonView
 	      	  android:id="@+id/mousebutton1"
 	          android:gravity="center_horizontal"
 	          android:background="#997f7f7f"
 	          android:layout_width="wrap_content"
 	          android:layout_height="fill_parent"
 	          android:layout_weight="1"/>
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	      <com.coboltforge.xbox.ui.MouseButtonView
 	       	  android:id="@+id/mousebutton2"
 	          android:gravity="center_horizontal"
 	          android:background="#bb7f7f7f"
 	          android:layout_width="wrap_content"
 	          android:layout_height="fill_parent"
 	          android:layout_weight="1"/>
-	      <com.coboltforge.dontmind.xbox.ui.MouseButtonView
+	      <com.coboltforge.xbox.ui.MouseButtonView
 	          android:id="@+id/mousebutton3"
 	          android:gravity="center_horizontal"
 	          android:background="#997f7f7f"
