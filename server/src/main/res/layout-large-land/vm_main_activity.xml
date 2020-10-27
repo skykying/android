@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <include layout="@layout/include_toolbar"/>
 
     <ScrollView
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
         android:scrollbars="vertical" >
 
         <LinearLayout
@@ -32,10 +31,10 @@
     </ScrollView>
 
     <ScrollView
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:scrollbars="vertical" >
+        android:scrollbars="horizontal" >
 
         <!-- this remoteInputStream focusable to start with view focus here! -->
 

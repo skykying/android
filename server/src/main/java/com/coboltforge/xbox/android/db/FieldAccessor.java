@@ -15,9 +15,9 @@ import java.lang.annotation.Target;
 public @interface FieldAccessor {
     String Name() default "";
 
-    com.coboltforge.xbox.android.db.FieldType Type() default FieldType.DEFAULT;
+    FieldType Type() default FieldType.DEFAULT;
 
-    com.coboltforge.xbox.android.db.FieldVisibility Visibility() default FieldVisibility.PRIVATE;
+    FieldVisibility Visibility() default FieldVisibility.PRIVATE;
 
     boolean Nullable() default true;
 

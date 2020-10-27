@@ -1,69 +1,31 @@
-/* Copyright 2011-2013 Google Inc.
- * Copyright 2013 mike wakerly <opensource@hoho.com>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
- * Project home page: https://github.com/mik3y/usb-serial-for-android
- */
-
 package me.jessyan.mvparms.demo.usbserial;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbManager;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import me.jessyan.mvparms.demo.R;
+import me.jessyan.mvparms.demo.setting.DeviceSetting;
 import me.jessyan.mvparms.demo.ui.BaseToolbarActivity;
 import me.jessyan.mvparms.demo.usbserial.util.HexDump;
 
-/**
- * Monitors a single {@link UsbSerialPort} instance, showing all data
- * received.
- *
- * @author mike wakerly (opensource@hoho.com)
- */
-public class SerialConsoleActivity extends BaseToolbarActivity implements SerialInputOutputManager.Listener  {
+public class SerialConsoleActivity extends BaseToolbarActivity  implements  SerialService.UsbCallback{
 
     private final String TAG = SerialConsoleActivity.class.getSimpleName();
 
-    /**
-     * Driver instance, passed in statically via
-     * {@link #show(Context, UsbSerialPort)}.
-     *
-     * <p/>
-     * This is a devious hack; it'd be cleaner to re-create the driver using
-     * arguments passed in with the {@link #startActivity(Intent)} intent. We
-     * can get away with it because both activities will run in the same
-     * process, and this is a simple demo.
-     */
     private static UsbSerialPort sPort = null;
 
     private TextView mTitleTextView;
@@ -72,9 +34,10 @@ public class SerialConsoleActivity extends BaseToolbarActivity implements Serial
     private CheckBox chkDTR;
     private CheckBox chkRTS;
 
-    private final ExecutorService mExecutor = Executors.newSingleThreadExecutor();
 
-    private SerialInputOutputManager mSerialIoManager;
+    private SerialService service = null;
+
+    private boolean isBound = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,132 +49,80 @@ public class SerialConsoleActivity extends BaseToolbarActivity implements Serial
         chkDTR = (CheckBox) findViewById(R.id.checkBoxDTR);
         chkRTS = (CheckBox) findViewById(R.id.checkBoxRTS);
 
-        chkDTR.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        chkDTR.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 try {
                     sPort.setDTR(isChecked);
                 }catch (IOException x){}
-            }
         });
         chkDTR.setVisibility(View.GONE);
 
-        chkRTS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        chkRTS.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 try {
                     sPort.setRTS(isChecked);
-                }catch (IOException x){}
-            }
+                }catch (IOException x){
+                }
         });
         chkRTS.setVisibility(View.GONE);
+
+        Intent intent = new Intent(this, SerialService.class);
+        bindService(intent, conn, BIND_AUTO_CREATE);
+
+
     }
 
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            isBound = true;
+            SerialService.UBinder myBinder = (SerialService.UBinder)binder;
+            service = myBinder.getService();
+
+            Log.i("DemoLog", "ActivityA onServiceConnected");
+            int num = service.getRandomNumber();
+            Log.i("DemoLog", "ActivityA 中调用 TestService的getRandomNumber方法, 结果: " + num);
+
+
+            service.usbInit(sPort);
+            registerCallback(service);
+            service.startUsbManager(sPort);
+            mTitleTextView.setText("Service start ok !");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+            Log.i("DemoLog", "ActivityA onServiceDisconnected");
+            mTitleTextView.setText("Service disconnected !");
+        }
+    };
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopIoManager();
-        if (sPort != null) {
-            try {
-                sPort.close();
-            } catch (IOException e) {
-                // Ignore.
-            }
-            sPort = null;
-        }
         finish();
     }
 
-    void showStatus(TextView theTextView, String theLabel, boolean theValue){
-        String msg = theLabel + ": " + (theValue ? "enabled" : "disabled") + "\n";
-        theTextView.append(msg);
+    public void registerCallback(SerialService serialService){
+        serialService.regsiterListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "Resumed, port=" + sPort);
-        if (sPort == null) {
-            mTitleTextView.setText("No serial device.");
-        } else {
-            final UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-
-            UsbDeviceConnection connection = usbManager.openDevice(sPort.getDriver().getDevice());
-            if (connection == null) {
-                mTitleTextView.setText("Opening device failed");
-                return;
-            }
-
-            try {
-                sPort.open(connection);
-                sPort.setParameters(9600, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-
-//                showStatus(mDumpTextView, "CD  - Carrier Detect", sPort.getCD());
-//                showStatus(mDumpTextView, "CTS - Clear To Send", sPort.getCTS());
-//                showStatus(mDumpTextView, "DSR - Data Set Ready", sPort.getDSR());
-//                showStatus(mDumpTextView, "DTR - Data Terminal Ready", sPort.getDTR());
-//                showStatus(mDumpTextView, "DSR - Data Set Ready", sPort.getDSR());
-//                showStatus(mDumpTextView, "RI  - Ring Indicator", sPort.getRI());
-//                showStatus(mDumpTextView, "RTS - Request To Send", sPort.getRTS());
-
-            } catch (IOException e) {
-                Log.e(TAG, "Error setting up device: " + e.getMessage(), e);
-                mTitleTextView.setText("Error opening device: " + e.getMessage());
-                try {
-                    sPort.close();
-                } catch (IOException e2) {
-                    // Ignore.
-                }
-                sPort = null;
-                return;
-            }
-            mTitleTextView.setText("Serial device: " + sPort.getClass().getSimpleName());
-        }
-        onDeviceStateChange();
     }
 
-    private void stopIoManager() {
-        if (mSerialIoManager != null) {
-            Log.i(TAG, "Stopping io manager ..");
-            mSerialIoManager.stop();
-            mSerialIoManager = null;
-        }
-    }
-
-    private void startIoManager() {
-        if (sPort != null) {
-            Log.i(TAG, "Starting io manager ..");
-            mSerialIoManager = new SerialInputOutputManager(sPort, this);
-            mExecutor.submit(mSerialIoManager);
-        }
-    }
-
-    private void onDeviceStateChange() {
-        stopIoManager();
-        startIoManager();
-    }
 
     private void updateReceivedData(byte[] data) {
 
-        String xdata = HexDump.dumpHexString(data);
-//        Log.i(TAG,"#####" + xdata);
+        String xdata =  HexDump.toHexString(data);
+        xdata = new String(data);
 
-        xdata =  HexDump.toHexString(data);
-//        Log.i(TAG,"&&&&" + xdata);
-
-         xdata = new String(data);
-//        Log.i(TAG,"!!!!!" + xdata);
-
-        String message = "Read " + data.length + " bytes: \n"
-                + xdata + "\n\n";
-
-        message = xdata;
-
-        if(mDumpTextView.getText().length() > 500){
+        if(mDumpTextView.getText().length() > 100){
             mDumpTextView.clearComposingText();
+            mDumpTextView.setText("");
         }
-        mDumpTextView.append(message);
+        mDumpTextView.append(xdata);
         mScrollView.smoothScrollTo(0, mDumpTextView.getBottom());
     }
 
@@ -229,14 +140,24 @@ public class SerialConsoleActivity extends BaseToolbarActivity implements Serial
     }
 
     @Override
-    public void onNewData(byte[] data) {
+    public void onNewUsbData(byte[] data) {
+
+        try {
+            sPort.write(data,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        DeviceSetting deviceSettingObject = new DeviceSetting();
+        deviceSettingObject.setAddress(new String(data).trim());
+
+        String stringSettings = gson.toJson(deviceSettingObject);
+        Log.d(TAG, "deviceSetting = " + stringSettings);
         runOnUiThread(()->{
-            updateReceivedData(data);
+            updateReceivedData(stringSettings.getBytes());
         });
-    }
 
-    @Override
-    public void onRunError(Exception e) {
-
+        DeviceSetting deviceSetting = gson.fromJson(stringSettings, DeviceSetting.class);
+        Log.d(TAG, "deviceSetting, address=" + deviceSetting.getAddress());
     }
 }

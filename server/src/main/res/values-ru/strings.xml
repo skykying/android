@@ -82,4 +82,7 @@
     Если вы хотите узнать, что нового, посетите <a href="https://raw.githubusercontent.com/bk138/multivnc/master/android/ChangeLog.md">онлайн-журнал изменений</а>.
     ]]>
 </string>
+    <string name="scaning">scanning ....</string>
+    <string name="scan_done">scan over</string>
+    <string name="auto_scan">scan auto</string>
 </resources>

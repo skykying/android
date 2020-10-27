@@ -204,7 +204,7 @@ public class DeviceListActivity extends BaseToolbarActivity {
     }
 
     private void showConsoleActivity(UsbSerialPort port) {
-        SerialConsoleActivity.show(this, port);
+        DeviceConfigureActivity.show(this, port);
     }
 
 }

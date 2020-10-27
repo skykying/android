@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.coboltforge.xbox.ui.DnsActivity;
 import com.jess.arms.utils.ArmsUtils;
 import com.yarolegovich.mp.MaterialPreferenceScreen;
 
@@ -18,6 +19,7 @@ import me.jessyan.mvparms.demo.R;
 import me.jessyan.mvparms.demo.mvp.ui.activity.DeviceActivity;
 import me.jessyan.mvparms.demo.mvp.ui.activity.MachineActivity;
 import me.jessyan.mvparms.demo.mvp.ui.activity.UserActivity;
+import me.jessyan.mvparms.demo.usbserial.DeviceConfigureActivity;
 import me.jessyan.mvparms.demo.usbserial.DeviceListActivity;
 
 
@@ -42,6 +44,8 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.rate).setOnClickListener(this);
         view.findViewById(R.id.terminal).setOnClickListener(this);
         view.findViewById(R.id.mdevice).setOnClickListener(this);
+        view.findViewById(R.id.scan).setOnClickListener(this);
+        view.findViewById(R.id.ufind).setOnClickListener(this);
 
         return view;
     }
@@ -89,6 +93,12 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
             case R.id.mdevice:
                 ArmsUtils.startActivity(DeviceActivity.class);
                 break;
+            case R.id.scan:
+                ArmsUtils.startActivity(DnsActivity.class);
+                break;
+            case R.id.ufind:
+                ArmsUtils.startActivity(DeviceConfigureActivity.class);
+                break;
         }
     }
 
@@ -97,7 +107,7 @@ public class MachineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String str = data.getStringExtra("data");
+        //String str = data.getStringExtra("data");
         //tvOne.setText(str);
     }
 

@@ -44,12 +44,12 @@
         app:mpc_title="@string/opsVms">
 
         <com.yarolegovich.mp.MaterialRightIconPreference
-            android:id="@+id/terminal"
+            android:id="@+id/scan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:mp_icon="@drawable/ic_star_border_black_24dp"
             app:mp_icon_tint="@color/textSecondary"
-            app:mp_title="@string/opsFindLocalDevice" />
+            app:mp_title="@string/opsScanLocalDevice" />
 
     </com.yarolegovich.mp.MaterialPreferenceCategory>
 

@@ -3,13 +3,17 @@ package com.coboltforge.xbox.ui;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,12 +31,14 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import com.coboltforge.xbox.R;
 import com.coboltforge.xbox.common.Constants;
 import com.coboltforge.xbox.db.ConnectionBean;
-import com.coboltforge.xbox.db.DatabaseProvider;
+import com.coboltforge.xbox.db.MostRecentBean;
+import com.coboltforge.xbox.db.VncDatabase;
 import com.coboltforge.xbox.protocol.IMDNS;
 import com.coboltforge.xbox.services.MDNSService;
 import com.coboltforge.xbox.ui.activity.VMBaseActivity;
 import com.coboltforge.xbox.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 
@@ -41,25 +47,28 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
     private static final String TAG = DnsActivity.class.getSimpleName();
 
     private LinearLayout serverlist;
-    private DatabaseProvider database;
+    private VncDatabase database;
 
     // service discovery stuff
     private MDNSService boundMDNSService;
     private ServiceConnection connection_MDNSService;
     private android.os.Handler handler = new android.os.Handler();
+    private static final int MESSAGE_REFRESH = 101;
+    private static final long REFRESH_TIMEOUT_MILLIS = 2400;
+
+    TextView scanView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.vm_main_activity);
+        setContentView(R.layout.vm_scan_activity);
 
         Intent intent = getIntent();
         String str = intent.getStringExtra("data");
 
         // get package debug flag and set it
         Utils.DEBUG(this);
+        database = new VncDatabase(this);
 
         // start the MDNS service
         startMDNSService();
@@ -68,11 +77,40 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
         bindToMDNSService(new Intent(this, MDNSService.class));
 
         serverlist = (LinearLayout) findViewById(R.id.discovered_servers_list);
+        scanView = (TextView)findViewById(R.id.scan_notify);
+        scanView.setText(R.string.auto_scan);
 
-        database = new DatabaseProvider();
         final SharedPreferences settings = getSharedPreferences(Constants.PREFSNAME, MODE_PRIVATE);
     }
 
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MESSAGE_REFRESH:
+                    scanView.setText(R.string.scaning);
+                    restartService();
+                    mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);
+                    break;
+                default:
+                    super.handleMessage(msg);
+                    break;
+            }
+        }
+
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.sendEmptyMessage(MESSAGE_REFRESH);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeMessages(MESSAGE_REFRESH);
+    }
 
     protected void onDestroy() {
 
@@ -119,19 +157,23 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.itemMDNSRestart) {
-            serverlist.removeAllViews();
-            findViewById(R.id.discovered_servers_waitwheel).setVisibility(View.VISIBLE);
-
-            try {
-                boundMDNSService.restart();
-            } catch (NullPointerException e) {
-            }
+            restartService();
         }
 
         return true;
     }
 
-    DatabaseProvider getDatabaseHelper() {
+    private void restartService(){
+        serverlist.removeAllViews();
+        findViewById(R.id.discovered_servers_waitwheel).setVisibility(View.VISIBLE);
+
+        try {
+            boundMDNSService.restart();
+        } catch (NullPointerException e) {
+        }
+    }
+
+    VncDatabase getDatabaseHelper() {
         return database;
     }
 
@@ -178,6 +220,41 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
         }
     }
 
+    /**
+     * Return the object representing the app global state in the database, or null
+     * if the object hasn't been set up yet
+     *
+     * @param db App's database -- only needs to be readable
+     * @return Object representing the single persistent instance of MostRecentBean, which
+     * remoteInputStream the app's global state
+     */
+    public static MostRecentBean getMostRecent(SQLiteDatabase db) {
+        ArrayList<MostRecentBean> recents = new ArrayList<MostRecentBean>(1);
+        MostRecentBean.getAll(db, MostRecentBean.GEN_TABLE_NAME, recents, MostRecentBean.GEN_NEW);
+        if (recents.size() == 0)
+            return null;
+        return recents.get(0);
+    }
+
+    private void writeRecent(ConnectionBean conn) {
+        SQLiteDatabase db = database.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            MostRecentBean mostRecent = getMostRecent(db);
+            if (mostRecent == null) {
+                mostRecent = new MostRecentBean();
+                mostRecent.setConnectionId(conn.get_Id());
+                mostRecent.Gen_insert(db);
+            } else {
+                mostRecent.setConnectionId(conn.get_Id());
+                mostRecent.Gen_update(db);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     @Override
     public void onMDNSnotify(final String conn_name, final ConnectionBean conn, final Hashtable<String, ConnectionBean> connections_discovered) {
         handler.postDelayed(new Runnable() {
@@ -213,7 +290,7 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
                             @Override
                             public void onClick(View view) {
                                 Log.d(TAG, "Starting discovered connection " + c.toString());
-                                database.writeRecent(c);
+                                writeRecent(c);
                                 Intent intent = new Intent(DnsActivity.this, VncCanvasActivity.class);
                                 intent.putExtra(Constants.CONNECTION, c.Gen_getValues());
                                 startActivity(intent);
@@ -235,6 +312,7 @@ public class DnsActivity extends VMBaseActivity implements IMDNS, LifecycleObser
             @Override
             public void run() {
                 findViewById(R.id.discovered_servers_waitwheel).setVisibility(View.GONE);
+                scanView.setText(R.string.scan_done);
             }
         });
     }

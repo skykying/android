@@ -82,4 +82,7 @@
        Se vuoi sapere quali modifiche sono state apportate con questa versione, puoi dare un\'occhiata online lanciare il <a href="https://raw.githubusercontent.com/bk138/multivnc/master/android/ChangeLog.md">registro delle modifiche disponibili (in inglese)</a>.
     ]]>
 </string>
+    <string name="scaning">scanning ....</string>
+    <string name="scan_done">scan over</string>
+    <string name="auto_scan">scan auto</string>
 </resources>

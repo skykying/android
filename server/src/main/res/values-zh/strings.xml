@@ -2,7 +2,7 @@
 <resources>
     <string name="address_caption">地址</string>
     <string name="alt_check">Alt</string>
-    <string name="app_name" translatable="false">XBOX</string>
+    <string name="app_name" translatable="false">CLOUD DEMO</string>
     <string name="server_found">发现 XBOX 服务</string>
     <string name="server_removed">未发现 XBOX 服务</string>
     <string name="restartMDNS">重启服务发现</string>
@@ -79,4 +79,7 @@
         Change Log</a>.
     ]]>
 </string>
+    <string name="scaning">scanning ....</string>
+    <string name="scan_done">scan over</string>
+    <string name="auto_scan">scan auto</string>
 </resources>

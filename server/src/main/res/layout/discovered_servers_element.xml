@@ -2,8 +2,11 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
+        android:id="@+id/scan_notify"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
         android:padding="20dip"
         android:textSize="14dp"
         android:text="@string/discovered_servers"

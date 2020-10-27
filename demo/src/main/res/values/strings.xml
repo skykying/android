@@ -19,4 +19,6 @@
     <string name="opsMachine">Machine</string>
     <string name="opsDevice">Device</string>
     <string name="opsHistory">History</string>
+    <string name="opsScanLocalDevice">Scan</string>
+    <string name="Scan">Scan</string>
 </resources>

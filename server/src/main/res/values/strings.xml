@@ -81,4 +81,8 @@
         Change Log</a>.
     ]]>
 </string>
+    <string name="restart">restart</string>
+    <string name="scaning">scanning ....</string>
+    <string name="scan_done">scan over</string>
+    <string name="auto_scan">scan auto</string>
 </resources>
